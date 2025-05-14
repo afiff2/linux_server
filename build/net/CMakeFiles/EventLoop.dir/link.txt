@@ -1,0 +1,2 @@
+/usr/bin/ar qc libEventLoop.a CMakeFiles/EventLoop.dir/EventLoop.cc.o
+/usr/bin/ranlib libEventLoop.a

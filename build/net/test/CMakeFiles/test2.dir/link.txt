@@ -1,0 +1,1 @@
+/usr/bin/c++ CMakeFiles/test2.dir/test2.cc.o -o test2  ../libEventLoop.a ../../base/libBaseUtils.a -lpthread 
