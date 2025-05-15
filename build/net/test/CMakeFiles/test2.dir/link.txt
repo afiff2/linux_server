@@ -1,1 +1,0 @@
-/usr/bin/c++ CMakeFiles/test2.dir/test2.cc.o -o test2  ../libnet.a ../../Thread/libThread.a ../../Logger/libLogger.a ../../base/libbase.a ../../Thread/libThread.a ../../base/libbase.a -lpthread 
