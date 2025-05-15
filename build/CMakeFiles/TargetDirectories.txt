@@ -12,6 +12,7 @@
 /root/linux_webserver/build/net/test/CMakeFiles/test1.dir
 /root/linux_webserver/build/net/test/CMakeFiles/test2.dir
 /root/linux_webserver/build/net/test/CMakeFiles/test_logger.dir
+/root/linux_webserver/build/net/test/CMakeFiles/test3.dir
 /root/linux_webserver/build/net/test/CMakeFiles/edit_cache.dir
 /root/linux_webserver/build/net/test/CMakeFiles/rebuild_cache.dir
 /root/linux_webserver/build/base/CMakeFiles/base.dir

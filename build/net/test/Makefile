@@ -158,6 +158,20 @@ test_logger/fast:
 	cd /root/linux_webserver/build && $(MAKE) $(MAKESILENT) -f net/test/CMakeFiles/test_logger.dir/build.make net/test/CMakeFiles/test_logger.dir/build
 .PHONY : test_logger/fast
 
+# Convenience name for target.
+net/test/CMakeFiles/test3.dir/rule:
+	cd /root/linux_webserver/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 net/test/CMakeFiles/test3.dir/rule
+.PHONY : net/test/CMakeFiles/test3.dir/rule
+
+# Convenience name for target.
+test3: net/test/CMakeFiles/test3.dir/rule
+.PHONY : test3
+
+# fast build rule for target.
+test3/fast:
+	cd /root/linux_webserver/build && $(MAKE) $(MAKESILENT) -f net/test/CMakeFiles/test3.dir/build.make net/test/CMakeFiles/test3.dir/build
+.PHONY : test3/fast
+
 test1.o: test1.cc.o
 .PHONY : test1.o
 
@@ -206,6 +220,30 @@ test2.cc.s:
 	cd /root/linux_webserver/build && $(MAKE) $(MAKESILENT) -f net/test/CMakeFiles/test2.dir/build.make net/test/CMakeFiles/test2.dir/test2.cc.s
 .PHONY : test2.cc.s
 
+test3.o: test3.cc.o
+.PHONY : test3.o
+
+# target to build an object file
+test3.cc.o:
+	cd /root/linux_webserver/build && $(MAKE) $(MAKESILENT) -f net/test/CMakeFiles/test3.dir/build.make net/test/CMakeFiles/test3.dir/test3.cc.o
+.PHONY : test3.cc.o
+
+test3.i: test3.cc.i
+.PHONY : test3.i
+
+# target to preprocess a source file
+test3.cc.i:
+	cd /root/linux_webserver/build && $(MAKE) $(MAKESILENT) -f net/test/CMakeFiles/test3.dir/build.make net/test/CMakeFiles/test3.dir/test3.cc.i
+.PHONY : test3.cc.i
+
+test3.s: test3.cc.s
+.PHONY : test3.s
+
+# target to generate assembly for a file
+test3.cc.s:
+	cd /root/linux_webserver/build && $(MAKE) $(MAKESILENT) -f net/test/CMakeFiles/test3.dir/build.make net/test/CMakeFiles/test3.dir/test3.cc.s
+.PHONY : test3.cc.s
+
 test_logger.o: test_logger.cc.o
 .PHONY : test_logger.o
 
@@ -240,6 +278,7 @@ help:
 	@echo "... rebuild_cache"
 	@echo "... test1"
 	@echo "... test2"
+	@echo "... test3"
 	@echo "... test_logger"
 	@echo "... test1.o"
 	@echo "... test1.i"
@@ -247,6 +286,9 @@ help:
 	@echo "... test2.o"
 	@echo "... test2.i"
 	@echo "... test2.s"
+	@echo "... test3.o"
+	@echo "... test3.i"
+	@echo "... test3.s"
 	@echo "... test_logger.o"
 	@echo "... test_logger.i"
 	@echo "... test_logger.s"

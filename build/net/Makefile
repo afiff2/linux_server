@@ -130,6 +130,30 @@ net/fast:
 	cd /root/linux_webserver/build && $(MAKE) $(MAKESILENT) -f net/CMakeFiles/net.dir/build.make net/CMakeFiles/net.dir/build
 .PHONY : net/fast
 
+Channel.o: Channel.cc.o
+.PHONY : Channel.o
+
+# target to build an object file
+Channel.cc.o:
+	cd /root/linux_webserver/build && $(MAKE) $(MAKESILENT) -f net/CMakeFiles/net.dir/build.make net/CMakeFiles/net.dir/Channel.cc.o
+.PHONY : Channel.cc.o
+
+Channel.i: Channel.cc.i
+.PHONY : Channel.i
+
+# target to preprocess a source file
+Channel.cc.i:
+	cd /root/linux_webserver/build && $(MAKE) $(MAKESILENT) -f net/CMakeFiles/net.dir/build.make net/CMakeFiles/net.dir/Channel.cc.i
+.PHONY : Channel.cc.i
+
+Channel.s: Channel.cc.s
+.PHONY : Channel.s
+
+# target to generate assembly for a file
+Channel.cc.s:
+	cd /root/linux_webserver/build && $(MAKE) $(MAKESILENT) -f net/CMakeFiles/net.dir/build.make net/CMakeFiles/net.dir/Channel.cc.s
+.PHONY : Channel.cc.s
+
 EventLoop.o: EventLoop.cc.o
 .PHONY : EventLoop.o
 
@@ -153,6 +177,30 @@ EventLoop.s: EventLoop.cc.s
 EventLoop.cc.s:
 	cd /root/linux_webserver/build && $(MAKE) $(MAKESILENT) -f net/CMakeFiles/net.dir/build.make net/CMakeFiles/net.dir/EventLoop.cc.s
 .PHONY : EventLoop.cc.s
+
+Poller.o: Poller.cc.o
+.PHONY : Poller.o
+
+# target to build an object file
+Poller.cc.o:
+	cd /root/linux_webserver/build && $(MAKE) $(MAKESILENT) -f net/CMakeFiles/net.dir/build.make net/CMakeFiles/net.dir/Poller.cc.o
+.PHONY : Poller.cc.o
+
+Poller.i: Poller.cc.i
+.PHONY : Poller.i
+
+# target to preprocess a source file
+Poller.cc.i:
+	cd /root/linux_webserver/build && $(MAKE) $(MAKESILENT) -f net/CMakeFiles/net.dir/build.make net/CMakeFiles/net.dir/Poller.cc.i
+.PHONY : Poller.cc.i
+
+Poller.s: Poller.cc.s
+.PHONY : Poller.s
+
+# target to generate assembly for a file
+Poller.cc.s:
+	cd /root/linux_webserver/build && $(MAKE) $(MAKESILENT) -f net/CMakeFiles/net.dir/build.make net/CMakeFiles/net.dir/Poller.cc.s
+.PHONY : Poller.cc.s
 
 test/test1.o: test/test1.cc.o
 .PHONY : test/test1.o
@@ -202,6 +250,30 @@ test/test2.cc.s:
 	cd /root/linux_webserver/build && $(MAKE) $(MAKESILENT) -f net/CMakeFiles/net.dir/build.make net/CMakeFiles/net.dir/test/test2.cc.s
 .PHONY : test/test2.cc.s
 
+test/test3.o: test/test3.cc.o
+.PHONY : test/test3.o
+
+# target to build an object file
+test/test3.cc.o:
+	cd /root/linux_webserver/build && $(MAKE) $(MAKESILENT) -f net/CMakeFiles/net.dir/build.make net/CMakeFiles/net.dir/test/test3.cc.o
+.PHONY : test/test3.cc.o
+
+test/test3.i: test/test3.cc.i
+.PHONY : test/test3.i
+
+# target to preprocess a source file
+test/test3.cc.i:
+	cd /root/linux_webserver/build && $(MAKE) $(MAKESILENT) -f net/CMakeFiles/net.dir/build.make net/CMakeFiles/net.dir/test/test3.cc.i
+.PHONY : test/test3.cc.i
+
+test/test3.s: test/test3.cc.s
+.PHONY : test/test3.s
+
+# target to generate assembly for a file
+test/test3.cc.s:
+	cd /root/linux_webserver/build && $(MAKE) $(MAKESILENT) -f net/CMakeFiles/net.dir/build.make net/CMakeFiles/net.dir/test/test3.cc.s
+.PHONY : test/test3.cc.s
+
 test/test_logger.o: test/test_logger.cc.o
 .PHONY : test/test_logger.o
 
@@ -235,15 +307,24 @@ help:
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
 	@echo "... net"
+	@echo "... Channel.o"
+	@echo "... Channel.i"
+	@echo "... Channel.s"
 	@echo "... EventLoop.o"
 	@echo "... EventLoop.i"
 	@echo "... EventLoop.s"
+	@echo "... Poller.o"
+	@echo "... Poller.i"
+	@echo "... Poller.s"
 	@echo "... test/test1.o"
 	@echo "... test/test1.i"
 	@echo "... test/test1.s"
 	@echo "... test/test2.o"
 	@echo "... test/test2.i"
 	@echo "... test/test2.s"
+	@echo "... test/test3.o"
+	@echo "... test/test3.i"
+	@echo "... test/test3.s"
 	@echo "... test/test_logger.o"
 	@echo "... test/test_logger.i"
 	@echo "... test/test_logger.s"

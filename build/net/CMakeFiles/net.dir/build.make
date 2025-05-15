@@ -69,10 +69,24 @@ include net/CMakeFiles/net.dir/progress.make
 # Include the compile flags for this target's objects.
 include net/CMakeFiles/net.dir/flags.make
 
+net/CMakeFiles/net.dir/Channel.cc.o: net/CMakeFiles/net.dir/flags.make
+net/CMakeFiles/net.dir/Channel.cc.o: /root/linux_webserver/net/Channel.cc
+net/CMakeFiles/net.dir/Channel.cc.o: net/CMakeFiles/net.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/root/linux_webserver/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object net/CMakeFiles/net.dir/Channel.cc.o"
+	cd /root/linux_webserver/build/net && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT net/CMakeFiles/net.dir/Channel.cc.o -MF CMakeFiles/net.dir/Channel.cc.o.d -o CMakeFiles/net.dir/Channel.cc.o -c /root/linux_webserver/net/Channel.cc
+
+net/CMakeFiles/net.dir/Channel.cc.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/net.dir/Channel.cc.i"
+	cd /root/linux_webserver/build/net && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /root/linux_webserver/net/Channel.cc > CMakeFiles/net.dir/Channel.cc.i
+
+net/CMakeFiles/net.dir/Channel.cc.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/net.dir/Channel.cc.s"
+	cd /root/linux_webserver/build/net && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /root/linux_webserver/net/Channel.cc -o CMakeFiles/net.dir/Channel.cc.s
+
 net/CMakeFiles/net.dir/EventLoop.cc.o: net/CMakeFiles/net.dir/flags.make
 net/CMakeFiles/net.dir/EventLoop.cc.o: /root/linux_webserver/net/EventLoop.cc
 net/CMakeFiles/net.dir/EventLoop.cc.o: net/CMakeFiles/net.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/root/linux_webserver/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object net/CMakeFiles/net.dir/EventLoop.cc.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/root/linux_webserver/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object net/CMakeFiles/net.dir/EventLoop.cc.o"
 	cd /root/linux_webserver/build/net && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT net/CMakeFiles/net.dir/EventLoop.cc.o -MF CMakeFiles/net.dir/EventLoop.cc.o.d -o CMakeFiles/net.dir/EventLoop.cc.o -c /root/linux_webserver/net/EventLoop.cc
 
 net/CMakeFiles/net.dir/EventLoop.cc.i: cmake_force
@@ -83,10 +97,24 @@ net/CMakeFiles/net.dir/EventLoop.cc.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/net.dir/EventLoop.cc.s"
 	cd /root/linux_webserver/build/net && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /root/linux_webserver/net/EventLoop.cc -o CMakeFiles/net.dir/EventLoop.cc.s
 
+net/CMakeFiles/net.dir/Poller.cc.o: net/CMakeFiles/net.dir/flags.make
+net/CMakeFiles/net.dir/Poller.cc.o: /root/linux_webserver/net/Poller.cc
+net/CMakeFiles/net.dir/Poller.cc.o: net/CMakeFiles/net.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/root/linux_webserver/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object net/CMakeFiles/net.dir/Poller.cc.o"
+	cd /root/linux_webserver/build/net && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT net/CMakeFiles/net.dir/Poller.cc.o -MF CMakeFiles/net.dir/Poller.cc.o.d -o CMakeFiles/net.dir/Poller.cc.o -c /root/linux_webserver/net/Poller.cc
+
+net/CMakeFiles/net.dir/Poller.cc.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/net.dir/Poller.cc.i"
+	cd /root/linux_webserver/build/net && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /root/linux_webserver/net/Poller.cc > CMakeFiles/net.dir/Poller.cc.i
+
+net/CMakeFiles/net.dir/Poller.cc.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/net.dir/Poller.cc.s"
+	cd /root/linux_webserver/build/net && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /root/linux_webserver/net/Poller.cc -o CMakeFiles/net.dir/Poller.cc.s
+
 net/CMakeFiles/net.dir/test/test1.cc.o: net/CMakeFiles/net.dir/flags.make
 net/CMakeFiles/net.dir/test/test1.cc.o: /root/linux_webserver/net/test/test1.cc
 net/CMakeFiles/net.dir/test/test1.cc.o: net/CMakeFiles/net.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/root/linux_webserver/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object net/CMakeFiles/net.dir/test/test1.cc.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/root/linux_webserver/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object net/CMakeFiles/net.dir/test/test1.cc.o"
 	cd /root/linux_webserver/build/net && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT net/CMakeFiles/net.dir/test/test1.cc.o -MF CMakeFiles/net.dir/test/test1.cc.o.d -o CMakeFiles/net.dir/test/test1.cc.o -c /root/linux_webserver/net/test/test1.cc
 
 net/CMakeFiles/net.dir/test/test1.cc.i: cmake_force
@@ -100,7 +128,7 @@ net/CMakeFiles/net.dir/test/test1.cc.s: cmake_force
 net/CMakeFiles/net.dir/test/test2.cc.o: net/CMakeFiles/net.dir/flags.make
 net/CMakeFiles/net.dir/test/test2.cc.o: /root/linux_webserver/net/test/test2.cc
 net/CMakeFiles/net.dir/test/test2.cc.o: net/CMakeFiles/net.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/root/linux_webserver/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object net/CMakeFiles/net.dir/test/test2.cc.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/root/linux_webserver/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object net/CMakeFiles/net.dir/test/test2.cc.o"
 	cd /root/linux_webserver/build/net && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT net/CMakeFiles/net.dir/test/test2.cc.o -MF CMakeFiles/net.dir/test/test2.cc.o.d -o CMakeFiles/net.dir/test/test2.cc.o -c /root/linux_webserver/net/test/test2.cc
 
 net/CMakeFiles/net.dir/test/test2.cc.i: cmake_force
@@ -111,10 +139,24 @@ net/CMakeFiles/net.dir/test/test2.cc.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/net.dir/test/test2.cc.s"
 	cd /root/linux_webserver/build/net && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /root/linux_webserver/net/test/test2.cc -o CMakeFiles/net.dir/test/test2.cc.s
 
+net/CMakeFiles/net.dir/test/test3.cc.o: net/CMakeFiles/net.dir/flags.make
+net/CMakeFiles/net.dir/test/test3.cc.o: /root/linux_webserver/net/test/test3.cc
+net/CMakeFiles/net.dir/test/test3.cc.o: net/CMakeFiles/net.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/root/linux_webserver/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object net/CMakeFiles/net.dir/test/test3.cc.o"
+	cd /root/linux_webserver/build/net && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT net/CMakeFiles/net.dir/test/test3.cc.o -MF CMakeFiles/net.dir/test/test3.cc.o.d -o CMakeFiles/net.dir/test/test3.cc.o -c /root/linux_webserver/net/test/test3.cc
+
+net/CMakeFiles/net.dir/test/test3.cc.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/net.dir/test/test3.cc.i"
+	cd /root/linux_webserver/build/net && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /root/linux_webserver/net/test/test3.cc > CMakeFiles/net.dir/test/test3.cc.i
+
+net/CMakeFiles/net.dir/test/test3.cc.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/net.dir/test/test3.cc.s"
+	cd /root/linux_webserver/build/net && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /root/linux_webserver/net/test/test3.cc -o CMakeFiles/net.dir/test/test3.cc.s
+
 net/CMakeFiles/net.dir/test/test_logger.cc.o: net/CMakeFiles/net.dir/flags.make
 net/CMakeFiles/net.dir/test/test_logger.cc.o: /root/linux_webserver/net/test/test_logger.cc
 net/CMakeFiles/net.dir/test/test_logger.cc.o: net/CMakeFiles/net.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/root/linux_webserver/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object net/CMakeFiles/net.dir/test/test_logger.cc.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/root/linux_webserver/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building CXX object net/CMakeFiles/net.dir/test/test_logger.cc.o"
 	cd /root/linux_webserver/build/net && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT net/CMakeFiles/net.dir/test/test_logger.cc.o -MF CMakeFiles/net.dir/test/test_logger.cc.o.d -o CMakeFiles/net.dir/test/test_logger.cc.o -c /root/linux_webserver/net/test/test_logger.cc
 
 net/CMakeFiles/net.dir/test/test_logger.cc.i: cmake_force
@@ -127,21 +169,27 @@ net/CMakeFiles/net.dir/test/test_logger.cc.s: cmake_force
 
 # Object files for target net
 net_OBJECTS = \
+"CMakeFiles/net.dir/Channel.cc.o" \
 "CMakeFiles/net.dir/EventLoop.cc.o" \
+"CMakeFiles/net.dir/Poller.cc.o" \
 "CMakeFiles/net.dir/test/test1.cc.o" \
 "CMakeFiles/net.dir/test/test2.cc.o" \
+"CMakeFiles/net.dir/test/test3.cc.o" \
 "CMakeFiles/net.dir/test/test_logger.cc.o"
 
 # External object files for target net
 net_EXTERNAL_OBJECTS =
 
+net/libnet.a: net/CMakeFiles/net.dir/Channel.cc.o
 net/libnet.a: net/CMakeFiles/net.dir/EventLoop.cc.o
+net/libnet.a: net/CMakeFiles/net.dir/Poller.cc.o
 net/libnet.a: net/CMakeFiles/net.dir/test/test1.cc.o
 net/libnet.a: net/CMakeFiles/net.dir/test/test2.cc.o
+net/libnet.a: net/CMakeFiles/net.dir/test/test3.cc.o
 net/libnet.a: net/CMakeFiles/net.dir/test/test_logger.cc.o
 net/libnet.a: net/CMakeFiles/net.dir/build.make
 net/libnet.a: net/CMakeFiles/net.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/root/linux_webserver/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Linking CXX static library libnet.a"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/root/linux_webserver/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Linking CXX static library libnet.a"
 	cd /root/linux_webserver/build/net && $(CMAKE_COMMAND) -P CMakeFiles/net.dir/cmake_clean_target.cmake
 	cd /root/linux_webserver/build/net && $(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/net.dir/link.txt --verbose=$(VERBOSE)
 

@@ -66,5 +66,6 @@ set(CMAKE_DEPEND_INFO_FILES
   "net/test/CMakeFiles/test1.dir/DependInfo.cmake"
   "net/test/CMakeFiles/test2.dir/DependInfo.cmake"
   "net/test/CMakeFiles/test_logger.dir/DependInfo.cmake"
+  "net/test/CMakeFiles/test3.dir/DependInfo.cmake"
   "base/CMakeFiles/base.dir/DependInfo.cmake"
   )

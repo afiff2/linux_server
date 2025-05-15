@@ -8,9 +8,12 @@ set(CMAKE_DEPENDS_LANGUAGES
 
 # The set of dependency files which are needed:
 set(CMAKE_DEPENDS_DEPENDENCY_FILES
+  "/root/linux_webserver/net/Channel.cc" "net/CMakeFiles/net.dir/Channel.cc.o" "gcc" "net/CMakeFiles/net.dir/Channel.cc.o.d"
   "/root/linux_webserver/net/EventLoop.cc" "net/CMakeFiles/net.dir/EventLoop.cc.o" "gcc" "net/CMakeFiles/net.dir/EventLoop.cc.o.d"
+  "/root/linux_webserver/net/Poller.cc" "net/CMakeFiles/net.dir/Poller.cc.o" "gcc" "net/CMakeFiles/net.dir/Poller.cc.o.d"
   "/root/linux_webserver/net/test/test1.cc" "net/CMakeFiles/net.dir/test/test1.cc.o" "gcc" "net/CMakeFiles/net.dir/test/test1.cc.o.d"
   "/root/linux_webserver/net/test/test2.cc" "net/CMakeFiles/net.dir/test/test2.cc.o" "gcc" "net/CMakeFiles/net.dir/test/test2.cc.o.d"
+  "/root/linux_webserver/net/test/test3.cc" "net/CMakeFiles/net.dir/test/test3.cc.o" "gcc" "net/CMakeFiles/net.dir/test/test3.cc.o.d"
   "/root/linux_webserver/net/test/test_logger.cc" "net/CMakeFiles/net.dir/test/test_logger.cc.o" "gcc" "net/CMakeFiles/net.dir/test/test_logger.cc.o.d"
   )
 

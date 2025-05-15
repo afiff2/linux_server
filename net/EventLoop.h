@@ -5,7 +5,11 @@
 
 #include <unistd.h>
 #include <sys/syscall.h>
+#include <vector>
+#include <Channel.h>
+#include <memory>
 
+class Poller;
 
 class EventLoop : noncopyable
 {
@@ -27,10 +31,21 @@ class EventLoop : noncopyable
         bool isInLoopThread() const {return threadId_ == CurrentThread::tid();}
 
         EventLoop* getEventLoopOfCurrentThread();
+
+        void updateChannel(Channel* channel);
+
+        void quit();
     
     private:
         void abortNotInLoopThread();
 
+
+        using ChannelList = std::vector<Channel*>;
+        
+
         bool looping_;// atomic
+        bool quit_;// atomic
         const pid_t threadId_;
+        std::unique_ptr<Poller> poller_;
+        ChannelList activeChannels_;
 };

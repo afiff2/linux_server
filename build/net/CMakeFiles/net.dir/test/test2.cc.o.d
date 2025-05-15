@@ -150,21 +150,21 @@ net/CMakeFiles/net.dir/test/test2.cc.o: \
  /root/linux_webserver/Thread/CurrentThread.h /usr/include/sys/syscall.h \
  /usr/include/asm/unistd.h /usr/include/asm/unistd_64.h \
  /usr/include/bits/syscall.h /root/linux_webserver/net/EventLoop.h \
- /root/linux_webserver/base/noncopyable.h \
- /root/linux_webserver/Logger/Logger.h /usr/include/string.h \
- /usr/include/strings.h /root/linux_webserver/Logger/LogStream.h \
- /root/linux_webserver/base/FixedBuffer.h /usr/include/c++/10/functional \
- /usr/include/c++/10/bits/std_function.h \
+ /root/linux_webserver/base/noncopyable.h /usr/include/c++/10/vector \
+ /usr/include/c++/10/bits/stl_vector.h \
+ /usr/include/c++/10/bits/stl_bvector.h \
+ /usr/include/c++/10/bits/vector.tcc /root/linux_webserver/net/Channel.h \
+ /usr/include/c++/10/functional /usr/include/c++/10/bits/std_function.h \
  /usr/include/c++/10/unordered_map /usr/include/c++/10/bits/hashtable.h \
  /usr/include/c++/10/bits/hashtable_policy.h \
  /usr/include/c++/10/bits/node_handle.h /usr/include/c++/10/optional \
  /usr/include/c++/10/bits/enable_special_members.h \
  /usr/include/c++/10/bits/unordered_map.h \
- /usr/include/c++/10/bits/erase_if.h /usr/include/c++/10/vector \
- /usr/include/c++/10/bits/stl_vector.h \
- /usr/include/c++/10/bits/stl_bvector.h \
- /usr/include/c++/10/bits/vector.tcc /usr/include/c++/10/bits/stl_algo.h \
+ /usr/include/c++/10/bits/erase_if.h /usr/include/c++/10/bits/stl_algo.h \
  /usr/include/c++/10/bits/algorithmfwd.h \
  /usr/include/c++/10/bits/stl_heap.h \
  /usr/include/c++/10/bits/uniform_int_dist.h \
+ /root/linux_webserver/Logger/Logger.h /usr/include/string.h \
+ /usr/include/strings.h /root/linux_webserver/Logger/LogStream.h \
+ /root/linux_webserver/base/FixedBuffer.h \
  /root/linux_webserver/base/Timestamp.h /usr/include/sys/time.h

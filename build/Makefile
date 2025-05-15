@@ -195,6 +195,19 @@ test_logger/fast:
 .PHONY : test_logger/fast
 
 #=============================================================================
+# Target rules for targets named test3
+
+# Build rule for target.
+test3: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 test3
+.PHONY : test3
+
+# fast build rule for target.
+test3/fast:
+	$(MAKE) $(MAKESILENT) -f net/test/CMakeFiles/test3.dir/build.make net/test/CMakeFiles/test3.dir/build
+.PHONY : test3/fast
+
+#=============================================================================
 # Target rules for targets named base
 
 # Build rule for target.
@@ -221,6 +234,7 @@ help:
 	@echo "... net"
 	@echo "... test1"
 	@echo "... test2"
+	@echo "... test3"
 	@echo "... test_logger"
 .PHONY : help
 
