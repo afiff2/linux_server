@@ -1,1 +1,1 @@
-/usr/bin/c++ CMakeFiles/test1.dir/test1.cc.o -o test1  ../libEventLoop.a ../../base/libBaseUtils.a -lpthread 
+/usr/bin/c++ CMakeFiles/test1.dir/test1.cc.o -o test1  ../libnet.a ../../Thread/libThread.a ../../Logger/libLogger.a ../../base/libbase.a ../../Thread/libThread.a ../../base/libbase.a -lpthread 

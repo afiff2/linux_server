@@ -1,9 +1,9 @@
 #include <iostream>
 #include <thread> 
 #include <unistd.h>
-#include "../../base/CurrentThread.h"
-#include "../EventLoop.h"
-#include "../../base/Logger.h"
+#include "CurrentThread.h"
+#include "EventLoop.h"
+#include "Logger.h"
 
 void threadFunc()
 {

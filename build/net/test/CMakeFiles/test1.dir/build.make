@@ -92,8 +92,12 @@ test1_EXTERNAL_OBJECTS =
 
 net/test/test1: net/test/CMakeFiles/test1.dir/test1.cc.o
 net/test/test1: net/test/CMakeFiles/test1.dir/build.make
-net/test/test1: net/libEventLoop.a
-net/test/test1: base/libBaseUtils.a
+net/test/test1: net/libnet.a
+net/test/test1: Thread/libThread.a
+net/test/test1: Logger/libLogger.a
+net/test/test1: base/libbase.a
+net/test/test1: Thread/libThread.a
+net/test/test1: base/libbase.a
 net/test/test1: net/test/CMakeFiles/test1.dir/link.txt
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/root/linux_webserver/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Linking CXX executable test1"
 	cd /root/linux_webserver/build/net/test && $(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/test1.dir/link.txt --verbose=$(VERBOSE)

@@ -8,6 +8,8 @@ set(CMAKE_DEPENDS_GENERATOR "Unix Makefiles")
 set(CMAKE_MAKEFILE_DEPENDS
   "CMakeCache.txt"
   "/root/linux_webserver/CMakeLists.txt"
+  "/root/linux_webserver/Logger/CMakeLists.txt"
+  "/root/linux_webserver/Thread/CMakeLists.txt"
   "/root/linux_webserver/base/CMakeLists.txt"
   "CMakeFiles/3.26.5/CMakeCCompiler.cmake"
   "CMakeFiles/3.26.5/CMakeCXXCompiler.cmake"
@@ -49,16 +51,20 @@ set(CMAKE_MAKEFILE_OUTPUTS
 # Byproducts of CMake generate step:
 set(CMAKE_MAKEFILE_PRODUCTS
   "CMakeFiles/CMakeDirectoryInformation.cmake"
-  "base/CMakeFiles/CMakeDirectoryInformation.cmake"
+  "Logger/CMakeFiles/CMakeDirectoryInformation.cmake"
+  "Thread/CMakeFiles/CMakeDirectoryInformation.cmake"
   "net/CMakeFiles/CMakeDirectoryInformation.cmake"
   "net/test/CMakeFiles/CMakeDirectoryInformation.cmake"
+  "base/CMakeFiles/CMakeDirectoryInformation.cmake"
   )
 
 # Dependency information for all targets:
 set(CMAKE_DEPEND_INFO_FILES
-  "base/CMakeFiles/BaseUtils.dir/DependInfo.cmake"
-  "net/CMakeFiles/EventLoop.dir/DependInfo.cmake"
+  "Logger/CMakeFiles/Logger.dir/DependInfo.cmake"
+  "Thread/CMakeFiles/Thread.dir/DependInfo.cmake"
+  "net/CMakeFiles/net.dir/DependInfo.cmake"
   "net/test/CMakeFiles/test1.dir/DependInfo.cmake"
   "net/test/CMakeFiles/test2.dir/DependInfo.cmake"
   "net/test/CMakeFiles/test_logger.dir/DependInfo.cmake"
+  "base/CMakeFiles/base.dir/DependInfo.cmake"
   )

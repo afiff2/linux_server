@@ -117,30 +117,43 @@ depend:
 .PHONY : depend
 
 #=============================================================================
-# Target rules for targets named BaseUtils
+# Target rules for targets named Logger
 
 # Build rule for target.
-BaseUtils: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 BaseUtils
-.PHONY : BaseUtils
+Logger: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 Logger
+.PHONY : Logger
 
 # fast build rule for target.
-BaseUtils/fast:
-	$(MAKE) $(MAKESILENT) -f base/CMakeFiles/BaseUtils.dir/build.make base/CMakeFiles/BaseUtils.dir/build
-.PHONY : BaseUtils/fast
+Logger/fast:
+	$(MAKE) $(MAKESILENT) -f Logger/CMakeFiles/Logger.dir/build.make Logger/CMakeFiles/Logger.dir/build
+.PHONY : Logger/fast
 
 #=============================================================================
-# Target rules for targets named EventLoop
+# Target rules for targets named Thread
 
 # Build rule for target.
-EventLoop: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 EventLoop
-.PHONY : EventLoop
+Thread: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 Thread
+.PHONY : Thread
 
 # fast build rule for target.
-EventLoop/fast:
-	$(MAKE) $(MAKESILENT) -f net/CMakeFiles/EventLoop.dir/build.make net/CMakeFiles/EventLoop.dir/build
-.PHONY : EventLoop/fast
+Thread/fast:
+	$(MAKE) $(MAKESILENT) -f Thread/CMakeFiles/Thread.dir/build.make Thread/CMakeFiles/Thread.dir/build
+.PHONY : Thread/fast
+
+#=============================================================================
+# Target rules for targets named net
+
+# Build rule for target.
+net: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 net
+.PHONY : net
+
+# fast build rule for target.
+net/fast:
+	$(MAKE) $(MAKESILENT) -f net/CMakeFiles/net.dir/build.make net/CMakeFiles/net.dir/build
+.PHONY : net/fast
 
 #=============================================================================
 # Target rules for targets named test1
@@ -181,6 +194,19 @@ test_logger/fast:
 	$(MAKE) $(MAKESILENT) -f net/test/CMakeFiles/test_logger.dir/build.make net/test/CMakeFiles/test_logger.dir/build
 .PHONY : test_logger/fast
 
+#=============================================================================
+# Target rules for targets named base
+
+# Build rule for target.
+base: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 base
+.PHONY : base
+
+# fast build rule for target.
+base/fast:
+	$(MAKE) $(MAKESILENT) -f base/CMakeFiles/base.dir/build.make base/CMakeFiles/base.dir/build
+.PHONY : base/fast
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -189,8 +215,10 @@ help:
 	@echo "... depend"
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
-	@echo "... BaseUtils"
-	@echo "... EventLoop"
+	@echo "... Logger"
+	@echo "... Thread"
+	@echo "... base"
+	@echo "... net"
 	@echo "... test1"
 	@echo "... test2"
 	@echo "... test_logger"

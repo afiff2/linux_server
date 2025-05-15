@@ -92,7 +92,12 @@ test_logger_EXTERNAL_OBJECTS =
 
 net/test/test_logger: net/test/CMakeFiles/test_logger.dir/test_logger.cc.o
 net/test/test_logger: net/test/CMakeFiles/test_logger.dir/build.make
-net/test/test_logger: base/libBaseUtils.a
+net/test/test_logger: net/libnet.a
+net/test/test_logger: Thread/libThread.a
+net/test/test_logger: Logger/libLogger.a
+net/test/test_logger: base/libbase.a
+net/test/test_logger: Thread/libThread.a
+net/test/test_logger: base/libbase.a
 net/test/test_logger: net/test/CMakeFiles/test_logger.dir/link.txt
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/root/linux_webserver/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Linking CXX executable test_logger"
 	cd /root/linux_webserver/build/net/test && $(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/test_logger.dir/link.txt --verbose=$(VERBOSE)

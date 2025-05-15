@@ -117,66 +117,42 @@ depend:
 .PHONY : depend
 
 # Convenience name for target.
-base/CMakeFiles/BaseUtils.dir/rule:
-	cd /root/linux_webserver/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 base/CMakeFiles/BaseUtils.dir/rule
-.PHONY : base/CMakeFiles/BaseUtils.dir/rule
+base/CMakeFiles/base.dir/rule:
+	cd /root/linux_webserver/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 base/CMakeFiles/base.dir/rule
+.PHONY : base/CMakeFiles/base.dir/rule
 
 # Convenience name for target.
-BaseUtils: base/CMakeFiles/BaseUtils.dir/rule
-.PHONY : BaseUtils
+base: base/CMakeFiles/base.dir/rule
+.PHONY : base
 
 # fast build rule for target.
-BaseUtils/fast:
-	cd /root/linux_webserver/build && $(MAKE) $(MAKESILENT) -f base/CMakeFiles/BaseUtils.dir/build.make base/CMakeFiles/BaseUtils.dir/build
-.PHONY : BaseUtils/fast
+base/fast:
+	cd /root/linux_webserver/build && $(MAKE) $(MAKESILENT) -f base/CMakeFiles/base.dir/build.make base/CMakeFiles/base.dir/build
+.PHONY : base/fast
 
-CurrentThread.o: CurrentThread.cc.o
-.PHONY : CurrentThread.o
-
-# target to build an object file
-CurrentThread.cc.o:
-	cd /root/linux_webserver/build && $(MAKE) $(MAKESILENT) -f base/CMakeFiles/BaseUtils.dir/build.make base/CMakeFiles/BaseUtils.dir/CurrentThread.cc.o
-.PHONY : CurrentThread.cc.o
-
-CurrentThread.i: CurrentThread.cc.i
-.PHONY : CurrentThread.i
-
-# target to preprocess a source file
-CurrentThread.cc.i:
-	cd /root/linux_webserver/build && $(MAKE) $(MAKESILENT) -f base/CMakeFiles/BaseUtils.dir/build.make base/CMakeFiles/BaseUtils.dir/CurrentThread.cc.i
-.PHONY : CurrentThread.cc.i
-
-CurrentThread.s: CurrentThread.cc.s
-.PHONY : CurrentThread.s
-
-# target to generate assembly for a file
-CurrentThread.cc.s:
-	cd /root/linux_webserver/build && $(MAKE) $(MAKESILENT) -f base/CMakeFiles/BaseUtils.dir/build.make base/CMakeFiles/BaseUtils.dir/CurrentThread.cc.s
-.PHONY : CurrentThread.cc.s
-
-Logger.o: Logger.cc.o
-.PHONY : Logger.o
+Timestamp.o: Timestamp.cc.o
+.PHONY : Timestamp.o
 
 # target to build an object file
-Logger.cc.o:
-	cd /root/linux_webserver/build && $(MAKE) $(MAKESILENT) -f base/CMakeFiles/BaseUtils.dir/build.make base/CMakeFiles/BaseUtils.dir/Logger.cc.o
-.PHONY : Logger.cc.o
+Timestamp.cc.o:
+	cd /root/linux_webserver/build && $(MAKE) $(MAKESILENT) -f base/CMakeFiles/base.dir/build.make base/CMakeFiles/base.dir/Timestamp.cc.o
+.PHONY : Timestamp.cc.o
 
-Logger.i: Logger.cc.i
-.PHONY : Logger.i
+Timestamp.i: Timestamp.cc.i
+.PHONY : Timestamp.i
 
 # target to preprocess a source file
-Logger.cc.i:
-	cd /root/linux_webserver/build && $(MAKE) $(MAKESILENT) -f base/CMakeFiles/BaseUtils.dir/build.make base/CMakeFiles/BaseUtils.dir/Logger.cc.i
-.PHONY : Logger.cc.i
+Timestamp.cc.i:
+	cd /root/linux_webserver/build && $(MAKE) $(MAKESILENT) -f base/CMakeFiles/base.dir/build.make base/CMakeFiles/base.dir/Timestamp.cc.i
+.PHONY : Timestamp.cc.i
 
-Logger.s: Logger.cc.s
-.PHONY : Logger.s
+Timestamp.s: Timestamp.cc.s
+.PHONY : Timestamp.s
 
 # target to generate assembly for a file
-Logger.cc.s:
-	cd /root/linux_webserver/build && $(MAKE) $(MAKESILENT) -f base/CMakeFiles/BaseUtils.dir/build.make base/CMakeFiles/BaseUtils.dir/Logger.cc.s
-.PHONY : Logger.cc.s
+Timestamp.cc.s:
+	cd /root/linux_webserver/build && $(MAKE) $(MAKESILENT) -f base/CMakeFiles/base.dir/build.make base/CMakeFiles/base.dir/Timestamp.cc.s
+.PHONY : Timestamp.cc.s
 
 # Help Target
 help:
@@ -186,13 +162,10 @@ help:
 	@echo "... depend"
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
-	@echo "... BaseUtils"
-	@echo "... CurrentThread.o"
-	@echo "... CurrentThread.i"
-	@echo "... CurrentThread.s"
-	@echo "... Logger.o"
-	@echo "... Logger.i"
-	@echo "... Logger.s"
+	@echo "... base"
+	@echo "... Timestamp.o"
+	@echo "... Timestamp.i"
+	@echo "... Timestamp.s"
 .PHONY : help
 
 

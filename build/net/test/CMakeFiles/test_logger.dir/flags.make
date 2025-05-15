@@ -4,7 +4,7 @@
 # compile CXX with /usr/bin/c++
 CXX_DEFINES = 
 
-CXX_INCLUDES = 
+CXX_INCLUDES = -I/root/linux_webserver/base -I/root/linux_webserver -I/root/linux_webserver/net -I/root/linux_webserver/Thread -I/root/linux_webserver/Logger
 
 CXX_FLAGS = -std=gnu++17
 

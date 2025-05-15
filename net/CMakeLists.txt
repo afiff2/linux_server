@@ -1,8 +1,12 @@
-add_library(EventLoop STATIC
-    EventLoop.cc
-)
+# net/CMakeLists.txt
 
-# 确保 EventLoop 链接 BaseUtils（因为它用了 Logger）
-target_link_libraries(EventLoop PRIVATE BaseUtils)
+file(GLOB SOURCES "*.cc" "test/*.cc")
 
+add_library(net STATIC ${SOURCES})
+target_include_directories(net PUBLIC ${PROJECT_SOURCE_DIR}/net)
+
+# net 库依赖 base Thread 和 Logger
+target_link_libraries(net PRIVATE base Thread Logger)
+
+# 添加测试程序
 add_subdirectory(test)

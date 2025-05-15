@@ -1,4 +1,4 @@
-#include "../../base/Logger.h"
+#include "Logger.h"
 
 int main() {
     LOG_INFO << "This is a test log message.";

@@ -1,2 +1,0 @@
-/usr/bin/ar qc libBaseUtils.a CMakeFiles/BaseUtils.dir/CurrentThread.cc.o CMakeFiles/BaseUtils.dir/Logger.cc.o
-/usr/bin/ranlib libBaseUtils.a

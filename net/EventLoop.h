@@ -1,7 +1,7 @@
 #pragma once
 
-#include "../base/noncopyable.h"
-#include "../base/CurrentThread.h"
+#include "noncopyable.h"
+#include "CurrentThread.h"
 
 #include <unistd.h>
 #include <sys/syscall.h>

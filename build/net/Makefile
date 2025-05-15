@@ -117,25 +117,25 @@ depend:
 .PHONY : depend
 
 # Convenience name for target.
-net/CMakeFiles/EventLoop.dir/rule:
-	cd /root/linux_webserver/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 net/CMakeFiles/EventLoop.dir/rule
-.PHONY : net/CMakeFiles/EventLoop.dir/rule
+net/CMakeFiles/net.dir/rule:
+	cd /root/linux_webserver/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 net/CMakeFiles/net.dir/rule
+.PHONY : net/CMakeFiles/net.dir/rule
 
 # Convenience name for target.
-EventLoop: net/CMakeFiles/EventLoop.dir/rule
-.PHONY : EventLoop
+net: net/CMakeFiles/net.dir/rule
+.PHONY : net
 
 # fast build rule for target.
-EventLoop/fast:
-	cd /root/linux_webserver/build && $(MAKE) $(MAKESILENT) -f net/CMakeFiles/EventLoop.dir/build.make net/CMakeFiles/EventLoop.dir/build
-.PHONY : EventLoop/fast
+net/fast:
+	cd /root/linux_webserver/build && $(MAKE) $(MAKESILENT) -f net/CMakeFiles/net.dir/build.make net/CMakeFiles/net.dir/build
+.PHONY : net/fast
 
 EventLoop.o: EventLoop.cc.o
 .PHONY : EventLoop.o
 
 # target to build an object file
 EventLoop.cc.o:
-	cd /root/linux_webserver/build && $(MAKE) $(MAKESILENT) -f net/CMakeFiles/EventLoop.dir/build.make net/CMakeFiles/EventLoop.dir/EventLoop.cc.o
+	cd /root/linux_webserver/build && $(MAKE) $(MAKESILENT) -f net/CMakeFiles/net.dir/build.make net/CMakeFiles/net.dir/EventLoop.cc.o
 .PHONY : EventLoop.cc.o
 
 EventLoop.i: EventLoop.cc.i
@@ -143,7 +143,7 @@ EventLoop.i: EventLoop.cc.i
 
 # target to preprocess a source file
 EventLoop.cc.i:
-	cd /root/linux_webserver/build && $(MAKE) $(MAKESILENT) -f net/CMakeFiles/EventLoop.dir/build.make net/CMakeFiles/EventLoop.dir/EventLoop.cc.i
+	cd /root/linux_webserver/build && $(MAKE) $(MAKESILENT) -f net/CMakeFiles/net.dir/build.make net/CMakeFiles/net.dir/EventLoop.cc.i
 .PHONY : EventLoop.cc.i
 
 EventLoop.s: EventLoop.cc.s
@@ -151,8 +151,80 @@ EventLoop.s: EventLoop.cc.s
 
 # target to generate assembly for a file
 EventLoop.cc.s:
-	cd /root/linux_webserver/build && $(MAKE) $(MAKESILENT) -f net/CMakeFiles/EventLoop.dir/build.make net/CMakeFiles/EventLoop.dir/EventLoop.cc.s
+	cd /root/linux_webserver/build && $(MAKE) $(MAKESILENT) -f net/CMakeFiles/net.dir/build.make net/CMakeFiles/net.dir/EventLoop.cc.s
 .PHONY : EventLoop.cc.s
+
+test/test1.o: test/test1.cc.o
+.PHONY : test/test1.o
+
+# target to build an object file
+test/test1.cc.o:
+	cd /root/linux_webserver/build && $(MAKE) $(MAKESILENT) -f net/CMakeFiles/net.dir/build.make net/CMakeFiles/net.dir/test/test1.cc.o
+.PHONY : test/test1.cc.o
+
+test/test1.i: test/test1.cc.i
+.PHONY : test/test1.i
+
+# target to preprocess a source file
+test/test1.cc.i:
+	cd /root/linux_webserver/build && $(MAKE) $(MAKESILENT) -f net/CMakeFiles/net.dir/build.make net/CMakeFiles/net.dir/test/test1.cc.i
+.PHONY : test/test1.cc.i
+
+test/test1.s: test/test1.cc.s
+.PHONY : test/test1.s
+
+# target to generate assembly for a file
+test/test1.cc.s:
+	cd /root/linux_webserver/build && $(MAKE) $(MAKESILENT) -f net/CMakeFiles/net.dir/build.make net/CMakeFiles/net.dir/test/test1.cc.s
+.PHONY : test/test1.cc.s
+
+test/test2.o: test/test2.cc.o
+.PHONY : test/test2.o
+
+# target to build an object file
+test/test2.cc.o:
+	cd /root/linux_webserver/build && $(MAKE) $(MAKESILENT) -f net/CMakeFiles/net.dir/build.make net/CMakeFiles/net.dir/test/test2.cc.o
+.PHONY : test/test2.cc.o
+
+test/test2.i: test/test2.cc.i
+.PHONY : test/test2.i
+
+# target to preprocess a source file
+test/test2.cc.i:
+	cd /root/linux_webserver/build && $(MAKE) $(MAKESILENT) -f net/CMakeFiles/net.dir/build.make net/CMakeFiles/net.dir/test/test2.cc.i
+.PHONY : test/test2.cc.i
+
+test/test2.s: test/test2.cc.s
+.PHONY : test/test2.s
+
+# target to generate assembly for a file
+test/test2.cc.s:
+	cd /root/linux_webserver/build && $(MAKE) $(MAKESILENT) -f net/CMakeFiles/net.dir/build.make net/CMakeFiles/net.dir/test/test2.cc.s
+.PHONY : test/test2.cc.s
+
+test/test_logger.o: test/test_logger.cc.o
+.PHONY : test/test_logger.o
+
+# target to build an object file
+test/test_logger.cc.o:
+	cd /root/linux_webserver/build && $(MAKE) $(MAKESILENT) -f net/CMakeFiles/net.dir/build.make net/CMakeFiles/net.dir/test/test_logger.cc.o
+.PHONY : test/test_logger.cc.o
+
+test/test_logger.i: test/test_logger.cc.i
+.PHONY : test/test_logger.i
+
+# target to preprocess a source file
+test/test_logger.cc.i:
+	cd /root/linux_webserver/build && $(MAKE) $(MAKESILENT) -f net/CMakeFiles/net.dir/build.make net/CMakeFiles/net.dir/test/test_logger.cc.i
+.PHONY : test/test_logger.cc.i
+
+test/test_logger.s: test/test_logger.cc.s
+.PHONY : test/test_logger.s
+
+# target to generate assembly for a file
+test/test_logger.cc.s:
+	cd /root/linux_webserver/build && $(MAKE) $(MAKESILENT) -f net/CMakeFiles/net.dir/build.make net/CMakeFiles/net.dir/test/test_logger.cc.s
+.PHONY : test/test_logger.cc.s
 
 # Help Target
 help:
@@ -162,10 +234,19 @@ help:
 	@echo "... depend"
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
-	@echo "... EventLoop"
+	@echo "... net"
 	@echo "... EventLoop.o"
 	@echo "... EventLoop.i"
 	@echo "... EventLoop.s"
+	@echo "... test/test1.o"
+	@echo "... test/test1.i"
+	@echo "... test/test1.s"
+	@echo "... test/test2.o"
+	@echo "... test/test2.i"
+	@echo "... test/test2.s"
+	@echo "... test/test_logger.o"
+	@echo "... test/test_logger.i"
+	@echo "... test/test_logger.s"
 .PHONY : help
 
 

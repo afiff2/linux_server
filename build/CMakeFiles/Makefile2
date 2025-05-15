@@ -63,25 +63,61 @@ CMAKE_BINARY_DIR = /root/linux_webserver/build
 # Directory level rules for the build root directory
 
 # The main recursive "all" target.
-all: base/all
+all: Logger/all
+all: Thread/all
 all: net/all
+all: base/all
 .PHONY : all
 
 # The main recursive "preinstall" target.
-preinstall: base/preinstall
+preinstall: Logger/preinstall
+preinstall: Thread/preinstall
 preinstall: net/preinstall
+preinstall: base/preinstall
 .PHONY : preinstall
 
 # The main recursive "clean" target.
-clean: base/clean
+clean: Logger/clean
+clean: Thread/clean
 clean: net/clean
+clean: base/clean
 .PHONY : clean
+
+#=============================================================================
+# Directory level rules for directory Logger
+
+# Recursive "all" directory target.
+Logger/all: Logger/CMakeFiles/Logger.dir/all
+.PHONY : Logger/all
+
+# Recursive "preinstall" directory target.
+Logger/preinstall:
+.PHONY : Logger/preinstall
+
+# Recursive "clean" directory target.
+Logger/clean: Logger/CMakeFiles/Logger.dir/clean
+.PHONY : Logger/clean
+
+#=============================================================================
+# Directory level rules for directory Thread
+
+# Recursive "all" directory target.
+Thread/all: Thread/CMakeFiles/Thread.dir/all
+.PHONY : Thread/all
+
+# Recursive "preinstall" directory target.
+Thread/preinstall:
+.PHONY : Thread/preinstall
+
+# Recursive "clean" directory target.
+Thread/clean: Thread/CMakeFiles/Thread.dir/clean
+.PHONY : Thread/clean
 
 #=============================================================================
 # Directory level rules for directory base
 
 # Recursive "all" directory target.
-base/all: base/CMakeFiles/BaseUtils.dir/all
+base/all: base/CMakeFiles/base.dir/all
 .PHONY : base/all
 
 # Recursive "preinstall" directory target.
@@ -89,14 +125,14 @@ base/preinstall:
 .PHONY : base/preinstall
 
 # Recursive "clean" directory target.
-base/clean: base/CMakeFiles/BaseUtils.dir/clean
+base/clean: base/CMakeFiles/base.dir/clean
 .PHONY : base/clean
 
 #=============================================================================
 # Directory level rules for directory net
 
 # Recursive "all" directory target.
-net/all: net/CMakeFiles/EventLoop.dir/all
+net/all: net/CMakeFiles/net.dir/all
 net/all: net/test/all
 .PHONY : net/all
 
@@ -105,7 +141,7 @@ net/preinstall: net/test/preinstall
 .PHONY : net/preinstall
 
 # Recursive "clean" directory target.
-net/clean: net/CMakeFiles/EventLoop.dir/clean
+net/clean: net/CMakeFiles/net.dir/clean
 net/clean: net/test/clean
 .PHONY : net/clean
 
@@ -129,71 +165,102 @@ net/test/clean: net/test/CMakeFiles/test_logger.dir/clean
 .PHONY : net/test/clean
 
 #=============================================================================
-# Target rules for target base/CMakeFiles/BaseUtils.dir
+# Target rules for target Logger/CMakeFiles/Logger.dir
 
 # All Build rule for target.
-base/CMakeFiles/BaseUtils.dir/all:
-	$(MAKE) $(MAKESILENT) -f base/CMakeFiles/BaseUtils.dir/build.make base/CMakeFiles/BaseUtils.dir/depend
-	$(MAKE) $(MAKESILENT) -f base/CMakeFiles/BaseUtils.dir/build.make base/CMakeFiles/BaseUtils.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/root/linux_webserver/build/CMakeFiles --progress-num=1,2,3 "Built target BaseUtils"
-.PHONY : base/CMakeFiles/BaseUtils.dir/all
+Logger/CMakeFiles/Logger.dir/all: Thread/CMakeFiles/Thread.dir/all
+Logger/CMakeFiles/Logger.dir/all: base/CMakeFiles/base.dir/all
+	$(MAKE) $(MAKESILENT) -f Logger/CMakeFiles/Logger.dir/build.make Logger/CMakeFiles/Logger.dir/depend
+	$(MAKE) $(MAKESILENT) -f Logger/CMakeFiles/Logger.dir/build.make Logger/CMakeFiles/Logger.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/root/linux_webserver/build/CMakeFiles --progress-num=1,2,3,4,5,6 "Built target Logger"
+.PHONY : Logger/CMakeFiles/Logger.dir/all
 
 # Build rule for subdir invocation for target.
-base/CMakeFiles/BaseUtils.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /root/linux_webserver/build/CMakeFiles 3
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 base/CMakeFiles/BaseUtils.dir/all
+Logger/CMakeFiles/Logger.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /root/linux_webserver/build/CMakeFiles 11
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 Logger/CMakeFiles/Logger.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /root/linux_webserver/build/CMakeFiles 0
-.PHONY : base/CMakeFiles/BaseUtils.dir/rule
+.PHONY : Logger/CMakeFiles/Logger.dir/rule
 
 # Convenience name for target.
-BaseUtils: base/CMakeFiles/BaseUtils.dir/rule
-.PHONY : BaseUtils
+Logger: Logger/CMakeFiles/Logger.dir/rule
+.PHONY : Logger
 
 # clean rule for target.
-base/CMakeFiles/BaseUtils.dir/clean:
-	$(MAKE) $(MAKESILENT) -f base/CMakeFiles/BaseUtils.dir/build.make base/CMakeFiles/BaseUtils.dir/clean
-.PHONY : base/CMakeFiles/BaseUtils.dir/clean
+Logger/CMakeFiles/Logger.dir/clean:
+	$(MAKE) $(MAKESILENT) -f Logger/CMakeFiles/Logger.dir/build.make Logger/CMakeFiles/Logger.dir/clean
+.PHONY : Logger/CMakeFiles/Logger.dir/clean
 
 #=============================================================================
-# Target rules for target net/CMakeFiles/EventLoop.dir
+# Target rules for target Thread/CMakeFiles/Thread.dir
 
 # All Build rule for target.
-net/CMakeFiles/EventLoop.dir/all: base/CMakeFiles/BaseUtils.dir/all
-	$(MAKE) $(MAKESILENT) -f net/CMakeFiles/EventLoop.dir/build.make net/CMakeFiles/EventLoop.dir/depend
-	$(MAKE) $(MAKESILENT) -f net/CMakeFiles/EventLoop.dir/build.make net/CMakeFiles/EventLoop.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/root/linux_webserver/build/CMakeFiles --progress-num=4,5 "Built target EventLoop"
-.PHONY : net/CMakeFiles/EventLoop.dir/all
+Thread/CMakeFiles/Thread.dir/all: base/CMakeFiles/base.dir/all
+	$(MAKE) $(MAKESILENT) -f Thread/CMakeFiles/Thread.dir/build.make Thread/CMakeFiles/Thread.dir/depend
+	$(MAKE) $(MAKESILENT) -f Thread/CMakeFiles/Thread.dir/build.make Thread/CMakeFiles/Thread.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/root/linux_webserver/build/CMakeFiles --progress-num=7,8,9 "Built target Thread"
+.PHONY : Thread/CMakeFiles/Thread.dir/all
 
 # Build rule for subdir invocation for target.
-net/CMakeFiles/EventLoop.dir/rule: cmake_check_build_system
+Thread/CMakeFiles/Thread.dir/rule: cmake_check_build_system
 	$(CMAKE_COMMAND) -E cmake_progress_start /root/linux_webserver/build/CMakeFiles 5
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 net/CMakeFiles/EventLoop.dir/all
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 Thread/CMakeFiles/Thread.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /root/linux_webserver/build/CMakeFiles 0
-.PHONY : net/CMakeFiles/EventLoop.dir/rule
+.PHONY : Thread/CMakeFiles/Thread.dir/rule
 
 # Convenience name for target.
-EventLoop: net/CMakeFiles/EventLoop.dir/rule
-.PHONY : EventLoop
+Thread: Thread/CMakeFiles/Thread.dir/rule
+.PHONY : Thread
 
 # clean rule for target.
-net/CMakeFiles/EventLoop.dir/clean:
-	$(MAKE) $(MAKESILENT) -f net/CMakeFiles/EventLoop.dir/build.make net/CMakeFiles/EventLoop.dir/clean
-.PHONY : net/CMakeFiles/EventLoop.dir/clean
+Thread/CMakeFiles/Thread.dir/clean:
+	$(MAKE) $(MAKESILENT) -f Thread/CMakeFiles/Thread.dir/build.make Thread/CMakeFiles/Thread.dir/clean
+.PHONY : Thread/CMakeFiles/Thread.dir/clean
+
+#=============================================================================
+# Target rules for target net/CMakeFiles/net.dir
+
+# All Build rule for target.
+net/CMakeFiles/net.dir/all: Logger/CMakeFiles/Logger.dir/all
+net/CMakeFiles/net.dir/all: Thread/CMakeFiles/Thread.dir/all
+net/CMakeFiles/net.dir/all: base/CMakeFiles/base.dir/all
+	$(MAKE) $(MAKESILENT) -f net/CMakeFiles/net.dir/build.make net/CMakeFiles/net.dir/depend
+	$(MAKE) $(MAKESILENT) -f net/CMakeFiles/net.dir/build.make net/CMakeFiles/net.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/root/linux_webserver/build/CMakeFiles --progress-num=12,13,14,15,16 "Built target net"
+.PHONY : net/CMakeFiles/net.dir/all
+
+# Build rule for subdir invocation for target.
+net/CMakeFiles/net.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /root/linux_webserver/build/CMakeFiles 16
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 net/CMakeFiles/net.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /root/linux_webserver/build/CMakeFiles 0
+.PHONY : net/CMakeFiles/net.dir/rule
+
+# Convenience name for target.
+net: net/CMakeFiles/net.dir/rule
+.PHONY : net
+
+# clean rule for target.
+net/CMakeFiles/net.dir/clean:
+	$(MAKE) $(MAKESILENT) -f net/CMakeFiles/net.dir/build.make net/CMakeFiles/net.dir/clean
+.PHONY : net/CMakeFiles/net.dir/clean
 
 #=============================================================================
 # Target rules for target net/test/CMakeFiles/test1.dir
 
 # All Build rule for target.
-net/test/CMakeFiles/test1.dir/all: base/CMakeFiles/BaseUtils.dir/all
-net/test/CMakeFiles/test1.dir/all: net/CMakeFiles/EventLoop.dir/all
+net/test/CMakeFiles/test1.dir/all: Logger/CMakeFiles/Logger.dir/all
+net/test/CMakeFiles/test1.dir/all: Thread/CMakeFiles/Thread.dir/all
+net/test/CMakeFiles/test1.dir/all: net/CMakeFiles/net.dir/all
+net/test/CMakeFiles/test1.dir/all: base/CMakeFiles/base.dir/all
 	$(MAKE) $(MAKESILENT) -f net/test/CMakeFiles/test1.dir/build.make net/test/CMakeFiles/test1.dir/depend
 	$(MAKE) $(MAKESILENT) -f net/test/CMakeFiles/test1.dir/build.make net/test/CMakeFiles/test1.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/root/linux_webserver/build/CMakeFiles --progress-num=6,7 "Built target test1"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/root/linux_webserver/build/CMakeFiles --progress-num=17,18 "Built target test1"
 .PHONY : net/test/CMakeFiles/test1.dir/all
 
 # Build rule for subdir invocation for target.
 net/test/CMakeFiles/test1.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /root/linux_webserver/build/CMakeFiles 7
+	$(CMAKE_COMMAND) -E cmake_progress_start /root/linux_webserver/build/CMakeFiles 18
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 net/test/CMakeFiles/test1.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /root/linux_webserver/build/CMakeFiles 0
 .PHONY : net/test/CMakeFiles/test1.dir/rule
@@ -211,16 +278,18 @@ net/test/CMakeFiles/test1.dir/clean:
 # Target rules for target net/test/CMakeFiles/test2.dir
 
 # All Build rule for target.
-net/test/CMakeFiles/test2.dir/all: base/CMakeFiles/BaseUtils.dir/all
-net/test/CMakeFiles/test2.dir/all: net/CMakeFiles/EventLoop.dir/all
+net/test/CMakeFiles/test2.dir/all: Logger/CMakeFiles/Logger.dir/all
+net/test/CMakeFiles/test2.dir/all: Thread/CMakeFiles/Thread.dir/all
+net/test/CMakeFiles/test2.dir/all: net/CMakeFiles/net.dir/all
+net/test/CMakeFiles/test2.dir/all: base/CMakeFiles/base.dir/all
 	$(MAKE) $(MAKESILENT) -f net/test/CMakeFiles/test2.dir/build.make net/test/CMakeFiles/test2.dir/depend
 	$(MAKE) $(MAKESILENT) -f net/test/CMakeFiles/test2.dir/build.make net/test/CMakeFiles/test2.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/root/linux_webserver/build/CMakeFiles --progress-num=8,9 "Built target test2"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/root/linux_webserver/build/CMakeFiles --progress-num=19,20 "Built target test2"
 .PHONY : net/test/CMakeFiles/test2.dir/all
 
 # Build rule for subdir invocation for target.
 net/test/CMakeFiles/test2.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /root/linux_webserver/build/CMakeFiles 7
+	$(CMAKE_COMMAND) -E cmake_progress_start /root/linux_webserver/build/CMakeFiles 18
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 net/test/CMakeFiles/test2.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /root/linux_webserver/build/CMakeFiles 0
 .PHONY : net/test/CMakeFiles/test2.dir/rule
@@ -238,15 +307,18 @@ net/test/CMakeFiles/test2.dir/clean:
 # Target rules for target net/test/CMakeFiles/test_logger.dir
 
 # All Build rule for target.
-net/test/CMakeFiles/test_logger.dir/all: base/CMakeFiles/BaseUtils.dir/all
+net/test/CMakeFiles/test_logger.dir/all: Logger/CMakeFiles/Logger.dir/all
+net/test/CMakeFiles/test_logger.dir/all: Thread/CMakeFiles/Thread.dir/all
+net/test/CMakeFiles/test_logger.dir/all: net/CMakeFiles/net.dir/all
+net/test/CMakeFiles/test_logger.dir/all: base/CMakeFiles/base.dir/all
 	$(MAKE) $(MAKESILENT) -f net/test/CMakeFiles/test_logger.dir/build.make net/test/CMakeFiles/test_logger.dir/depend
 	$(MAKE) $(MAKESILENT) -f net/test/CMakeFiles/test_logger.dir/build.make net/test/CMakeFiles/test_logger.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/root/linux_webserver/build/CMakeFiles --progress-num=10,11 "Built target test_logger"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/root/linux_webserver/build/CMakeFiles --progress-num=21,22 "Built target test_logger"
 .PHONY : net/test/CMakeFiles/test_logger.dir/all
 
 # Build rule for subdir invocation for target.
 net/test/CMakeFiles/test_logger.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /root/linux_webserver/build/CMakeFiles 5
+	$(CMAKE_COMMAND) -E cmake_progress_start /root/linux_webserver/build/CMakeFiles 18
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 net/test/CMakeFiles/test_logger.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /root/linux_webserver/build/CMakeFiles 0
 .PHONY : net/test/CMakeFiles/test_logger.dir/rule
@@ -259,6 +331,32 @@ test_logger: net/test/CMakeFiles/test_logger.dir/rule
 net/test/CMakeFiles/test_logger.dir/clean:
 	$(MAKE) $(MAKESILENT) -f net/test/CMakeFiles/test_logger.dir/build.make net/test/CMakeFiles/test_logger.dir/clean
 .PHONY : net/test/CMakeFiles/test_logger.dir/clean
+
+#=============================================================================
+# Target rules for target base/CMakeFiles/base.dir
+
+# All Build rule for target.
+base/CMakeFiles/base.dir/all:
+	$(MAKE) $(MAKESILENT) -f base/CMakeFiles/base.dir/build.make base/CMakeFiles/base.dir/depend
+	$(MAKE) $(MAKESILENT) -f base/CMakeFiles/base.dir/build.make base/CMakeFiles/base.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/root/linux_webserver/build/CMakeFiles --progress-num=10,11 "Built target base"
+.PHONY : base/CMakeFiles/base.dir/all
+
+# Build rule for subdir invocation for target.
+base/CMakeFiles/base.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /root/linux_webserver/build/CMakeFiles 2
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 base/CMakeFiles/base.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /root/linux_webserver/build/CMakeFiles 0
+.PHONY : base/CMakeFiles/base.dir/rule
+
+# Convenience name for target.
+base: base/CMakeFiles/base.dir/rule
+.PHONY : base
+
+# clean rule for target.
+base/CMakeFiles/base.dir/clean:
+	$(MAKE) $(MAKESILENT) -f base/CMakeFiles/base.dir/build.make base/CMakeFiles/base.dir/clean
+.PHONY : base/CMakeFiles/base.dir/clean
 
 #=============================================================================
 # Special targets to cleanup operation of make.
