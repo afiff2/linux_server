@@ -2,6 +2,7 @@
 
 #include "noncopyable.h"
 #include "CurrentThread.h"
+#include "Timer.h"
 
 #include <unistd.h>
 #include <sys/syscall.h>
@@ -10,6 +11,9 @@
 #include <memory>
 
 class Poller;
+class TimerId;
+class Timestamp;
+class TimerQueue;
 
 class EventLoop : noncopyable
 {
@@ -35,6 +39,12 @@ class EventLoop : noncopyable
         void updateChannel(Channel* channel);
 
         void quit();
+
+        TimerId runAt(const Timestamp& time, const Timer::TimerCallback& cb);
+        TimerId runAfter(double delay, const Timer::TimerCallback& cb);
+        TimerId runEvery(double interval, const Timer::TimerCallback& cb);
+
+
     
     private:
         void abortNotInLoopThread();
@@ -48,4 +58,5 @@ class EventLoop : noncopyable
         const pid_t threadId_;
         std::unique_ptr<Poller> poller_;
         ChannelList activeChannels_;
+        std::unique_ptr<TimerQueue> timerQueue_;
 };

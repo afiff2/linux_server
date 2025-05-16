@@ -60,6 +60,11 @@ inline bool operator==(Timestamp lhs, Timestamp rhs)
     return lhs.microSecondsSinceEpoch() == rhs.microSecondsSinceEpoch();
 }
 
+inline bool operator!=(Timestamp lhs, Timestamp rhs)
+{
+    return lhs.microSecondsSinceEpoch() != rhs.microSecondsSinceEpoch();
+}
+
 // 如果是重复定时任务就会对此时间戳进行增加。
 inline Timestamp addTime(Timestamp timestamp, double seconds)
 {

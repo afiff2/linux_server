@@ -3,13 +3,16 @@
 #include <cassert>
 
 #include "Poller.h"
+#include "Timestamp.h"
+#include "TimerId.h"
+#include "TimerQueue.h"
 
 thread_local EventLoop *t_loopInThisThread = nullptr;
 
 const int kPollTimeMs = 5000;
 
 // 每个线程至多一个EventLoop
-EventLoop::EventLoop() : looping_(false), threadId_(CurrentThread::tid()), poller_(new Poller(this))
+EventLoop::EventLoop() : looping_(false), threadId_(CurrentThread::tid()), poller_(new Poller(this)), timerQueue_(new TimerQueue(this))
 {
     LOG_TRACE << "EventLoop created " << this << " in thread " << threadId_;
     if (t_loopInThisThread)
@@ -61,6 +64,23 @@ void EventLoop::quit()
 {
     quit_ = true;
     //wakeup();
+}
+
+TimerId EventLoop::runAt(const Timestamp& time, const Timer::TimerCallback& cb)
+{
+    return timerQueue_->addTimer(cb, time, 0.0);
+}
+
+TimerId EventLoop::runAfter(double delay, const Timer::TimerCallback& cb)
+{
+    Timestamp time(addTime(Timestamp::now(), delay));
+    return runAt(time, cb);
+}
+
+TimerId EventLoop::runEvery(double interval, const Timer::TimerCallback& cb)
+{
+    Timestamp time(addTime(Timestamp::now(), interval));
+    return timerQueue_->addTimer(cb, time, interval);
 }
 
 void EventLoop::updateChannel(Channel* channel)
