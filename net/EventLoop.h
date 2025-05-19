@@ -9,15 +9,19 @@
 #include <vector>
 #include <Channel.h>
 #include <memory>
+#include <mutex>
+
+#include "TimerId.h"
 
 class Poller;
-class TimerId;
 class Timestamp;
 class TimerQueue;
 
 class EventLoop : noncopyable
 {
     public:
+        using Functor = std::function<void()>;
+
         EventLoop();
         ~EventLoop();
 
@@ -44,19 +48,34 @@ class EventLoop : noncopyable
         TimerId runAfter(double delay, const Timer::TimerCallback& cb);
         TimerId runEvery(double interval, const Timer::TimerCallback& cb);
 
+        void runInLoop(const Functor& cb);
+        void queueInLoop(const Functor& cb);
+
 
     
     private:
-        void abortNotInLoopThread();
-
-
         using ChannelList = std::vector<Channel*>;
+
+        void abortNotInLoopThread();
+        void wakeup();
+        void handleRead();//wake up
+        void doPendingFunctors();
+
+
+
+
         
 
         bool looping_;// atomic
         bool quit_;// atomic
+        bool callingPendingFunctors_;//atomic
         const pid_t threadId_;
         std::unique_ptr<Poller> poller_;
+        Timestamp pollReturnTime_;
         ChannelList activeChannels_;
         std::unique_ptr<TimerQueue> timerQueue_;
+        int wakeupFd_;
+        std::unique_ptr<Channel> wakeupChannel_;
+        std::mutex mutex_;
+        std::vector<Functor> pendingFunctors_; //暴露给线程，需要mutex保护
 };
