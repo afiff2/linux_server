@@ -95,12 +95,12 @@ std::vector<TimerQueue::Entry> TimerQueue::getExpired(Timestamp now)
     return expired;
 }
 
-void TimerQueue::reset(const std::vector<Entry> &expired, Timestamp now)
+void TimerQueue::reset(std::vector<Entry> &expired, Timestamp now)
 {
     Timestamp nextExpire = Timestamp::invalid();
-    for (const auto &it : expired)
+    for (auto &it : expired)
     {
-        std::unique_ptr<Timer> timer = std::move(const_cast<Entry&>(it).second);
+        std::unique_ptr<Timer> timer = std::move(it.second);
         if (timer->repeat())
         {
             timer->restart(now);

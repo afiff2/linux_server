@@ -28,7 +28,7 @@ class TimerQueue : noncopyable
 
         //move out all expired timers
         std::vector<Entry> getExpired(Timestamp now);
-        void reset(const std::vector<Entry>& expired, Timestamp now);
+        void reset(std::vector<Entry>& expired, Timestamp now);
 
         bool insert(std::unique_ptr<Timer> timer);
 

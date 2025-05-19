@@ -81,10 +81,10 @@ void Logger::Impl::formatTime()
 
     // muduo使用Fmt格式化整数，这里我们直接写入buf
     char buf[32] = {0};
-    snprintf(buf, sizeof(buf), "%06d ", microseconds);
+    snprintf(buf, sizeof(buf), ".%06d ", microseconds);
 
     
-    stream_ << GeneralTemplate(ThreadInfo::t_timer, 17) << GeneralTemplate(buf, 7);
+    stream_ << GeneralTemplate(ThreadInfo::t_timer, 19) << GeneralTemplate(buf, 8);
 }
 void Logger::Impl::finish()
 {
