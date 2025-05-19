@@ -2,14 +2,17 @@
 
 find_package(Threads REQUIRED)
 
-add_executable(test1 test1.cc)
-add_executable(test2 test2.cc)
-add_executable(test_logger test_logger.cc)
-add_executable(test3 test3.cc)
-add_executable(test4 test4.cc)
-add_executable(test5 test5.cc)
-add_executable(test6 test6.cc)
-
+# 所有测试程序名（.cc 文件名，不含扩展名）
+set(TESTS
+    test1
+    test2
+    test3
+    test4
+    test5
+    test6
+    test7
+    test_logger
+)
 
 # 公共依赖项
 set(TEST_LIBS_PRIVATE
@@ -20,11 +23,8 @@ set(TEST_LIBS_PRIVATE
     Threads::Threads
 )
 
-# 为每个可执行文件链接相同的依赖
-target_link_libraries(test1 PRIVATE ${TEST_LIBS_PRIVATE})
-target_link_libraries(test2 PRIVATE ${TEST_LIBS_PRIVATE})
-target_link_libraries(test3 PRIVATE ${TEST_LIBS_PRIVATE})
-target_link_libraries(test4 PRIVATE ${TEST_LIBS_PRIVATE})
-target_link_libraries(test_logger PRIVATE ${TEST_LIBS_PRIVATE})
-target_link_libraries(test5 PRIVATE ${TEST_LIBS_PRIVATE})
-target_link_libraries(test6 PRIVATE ${TEST_LIBS_PRIVATE})
+# 对每个测试自动 add + link
+foreach(test_name IN LISTS TESTS)
+    add_executable(${test_name} ${test_name}.cc)
+    target_link_libraries(${test_name} PRIVATE ${TEST_LIBS_PRIVATE})
+endforeach()
