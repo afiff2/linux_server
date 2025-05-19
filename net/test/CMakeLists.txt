@@ -8,6 +8,8 @@ add_executable(test_logger test_logger.cc)
 add_executable(test3 test3.cc)
 add_executable(test4 test4.cc)
 add_executable(test5 test5.cc)
+add_executable(test6 test6.cc)
+
 
 # 公共依赖项
 set(TEST_LIBS_PRIVATE
@@ -25,3 +27,4 @@ target_link_libraries(test3 PRIVATE ${TEST_LIBS_PRIVATE})
 target_link_libraries(test4 PRIVATE ${TEST_LIBS_PRIVATE})
 target_link_libraries(test_logger PRIVATE ${TEST_LIBS_PRIVATE})
 target_link_libraries(test5 PRIVATE ${TEST_LIBS_PRIVATE})
+target_link_libraries(test6 PRIVATE ${TEST_LIBS_PRIVATE})

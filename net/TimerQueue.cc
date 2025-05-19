@@ -9,6 +9,7 @@
 #include <string.h>
 #include <sys/timerfd.h>
 #include <unistd.h>
+#include <functional>
 
 using namespace std::placeholders;
 
@@ -43,17 +44,24 @@ TimerQueue::~TimerQueue() { ::close(timerfd_); }
 
 TimerId TimerQueue::addTimer(const Timer::TimerCallback &cb, Timestamp when, double interval)
 {
+
+    Timer *ti = new Timer(cb, when, interval);
+
+    loop_->runInLoop(std::bind(&TimerQueue::addTimerInLoop, this, ti));
+    return TimerId(ti);
+}
+
+void TimerQueue::addTimerInLoop(Timer *timer)
+{
     loop_->assertInLoopThread();
-    std::unique_ptr<Timer> timer = std::make_unique<Timer>(cb, when, interval);
-    bool earliestChanged = insert(std::move(timer));
+    std::unique_ptr<Timer> timerPtr(timer);
+    bool earliestChanged = insert(std::move(timerPtr));
 
     if (earliestChanged)
     {
-        updateTimerFd(when);
+        updateTimerFd(timer->expiration());
     }
 
-    Timer *ti = new Timer(cb, when, interval);
-    return TimerId(ti);
 }
 
 void TimerQueue::handleRead()

@@ -24,6 +24,8 @@ class TimerQueue : noncopyable
         using Entry = std::pair<Timestamp, std::unique_ptr<Timer>>;
         using TimerSet = std::set<Entry>;
 
+        void addTimerInLoop(Timer *timer);
+
         void handleRead();
 
         //move out all expired timers
