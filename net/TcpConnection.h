@@ -5,6 +5,7 @@
 #include "noncopyable.h"
 #include <memory>
 #include <string>
+#include <functional>
 
 class Channel;
 class EventLoop;
@@ -29,16 +30,25 @@ class TcpConnection : noncopyable, public std::enable_shared_from_this<TcpConnec
 
     // called when TcpServer accepts a new connection
     void connectEstablished(); // should be called only once
+    //Internal use only
+    void setCloseCallback(const CloseCallback& cb)
+    {closeCallback_ = cb;}
+    // called when TcpServer accepts a new connection
+    void connectDestroyed();// should be called only once
 
   private:
     enum StateE
     {
         KConnecting,
         KConnected,
+        KDisconnected,
     };
 
     void setState(StateE s) { state_ = s; }
     void handleRead();
+    void handleWrite();
+    void handleClose();
+    void handleError();
 
     EventLoop *loop_;
     std::string name_;
@@ -49,4 +59,5 @@ class TcpConnection : noncopyable, public std::enable_shared_from_this<TcpConnec
     InetAddress peerAddr_;
     ConnectionCallback connectionCallback_;
     MessageCallback messageCallback_;
+    CloseCallback closeCallback_;
 };

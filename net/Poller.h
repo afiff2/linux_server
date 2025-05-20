@@ -20,8 +20,10 @@ class Poller : noncopyable
 
     // Polls the I/O events. Must be called in the loop thread
     Timestamp poll(int timeoutMs, ChannelList *activeChannels);
-
+    /// Must be called in the loop thread.
     void updateChannel(Channel *channel);
+    /// Must be called in the loop thread.
+    void removeChannel(Channel* channel);
 
     void assertInLoopThread() const;
 

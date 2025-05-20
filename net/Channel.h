@@ -13,11 +13,14 @@ class Channel : noncopyable
     public:
         using EventCallback = std::function<void()>;
         Channel(EventLoop* loop,int fd);
+        ~Channel();
 
         void handleEvent();
         void setReadCallback(const EventCallback& cb) {readCallback_ = cb;}
         void setWriteCallback(const EventCallback& cb) {writeCallback_ = cb;}
         void setErrorCallback(const EventCallback& cb) {errorCallback_ = cb;}
+        void setCloseCallback(const EventCallback& cb) {closeCallback_ = cb;}
+
 
         int fd() const {return fd_;}
         int events() const {return events_;}
@@ -27,7 +30,7 @@ class Channel : noncopyable
         void enableReading() {events_ |= KReadEvent; update();}
         void enableWriting() {events_ |= KWriteEvent; update();}
         void disableReading() {events_ &= ~KWriteEvent; update();}
-        void disableAll() {events_ |= KNoneEvent; update();}
+        void disableAll() {events_ = KNoneEvent; update();}
 
         //for Poller
         int index() { return index_; }
@@ -48,9 +51,10 @@ class Channel : noncopyable
         int events_;
         int revents_;
         int index_; //该Channel对应pollfdlist_中的第index_个pollfd
+        bool eventHandling_;
 
         EventCallback readCallback_;
         EventCallback writeCallback_;
         EventCallback errorCallback_;
-
+        EventCallback closeCallback_;
 };

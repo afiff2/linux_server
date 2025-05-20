@@ -47,5 +47,48 @@ void TcpConnection::handleRead()
 {
     char buf[65536];
     ssize_t n = ::read(channel_->fd(), buf, sizeof buf);
-    messageCallback_(shared_from_this(), buf, n);
+    if(n > 0)
+        messageCallback_(shared_from_this(), buf, n);
+    else if(n==0)
+        handleClose();
+    else
+        handleError();
+}
+
+void TcpConnection::handleClose()
+{
+    loop_->assertInLoopThread();
+    LOG_TRACE << "TcpConnection::handleClose state = " << state_;
+    assert(state_ == KConnected);
+    //析构关闭fd，方便定位没有析构的TcpConnection
+    channel_->disableAll();
+    //回调要放在最后，否则channel_可能已经被销毁
+    closeCallback_(shared_from_this());
+}
+
+void TcpConnection::handleError()
+{
+    int optval;
+    socklen_t optlen = sizeof optval;
+    int err = 0;
+    if (::getsockopt(channel_->fd(), SOL_SOCKET, SO_ERROR, &optval, &optlen) < 0)
+    {
+        err = errno;
+    }
+    else
+    {
+        err = optval;
+    }
+    LOG_ERROR<<"TcpConnection::handleError name:"<<name_.c_str()<<"- SO_ERROR:%"<<err;
+}
+
+void TcpConnection::connectDestroyed()
+{
+    loop_->assertInLoopThread();
+    assert(state_ == KConnected);
+    setState(KDisconnected);
+    channel_->disableAll();
+    connectionCallback_(shared_from_this());
+
+    loop_->removeChannel(channel_.get());
 }

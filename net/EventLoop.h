@@ -48,6 +48,8 @@ class EventLoop : noncopyable
         TimerId runAfter(double delay, const Timer::TimerCallback& cb);
         TimerId runEvery(double interval, const Timer::TimerCallback& cb);
 
+        void removeChannel(Channel* channel);
+
         void runInLoop(const Functor& cb);
         void queueInLoop(const Functor& cb);
 

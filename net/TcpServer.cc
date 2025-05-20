@@ -6,7 +6,7 @@
 #include "Logger.h"
 #include "TcpConnection.h"
 #include "Acceptor.h"
-
+#include <cassert>
 
 static EventLoop *CHECK_NOTNULL(EventLoop *loop)
 {
@@ -68,8 +68,30 @@ void TcpServer::newConnection(int sockfd, const InetAddress &peerAddr)
     InetAddress localAddr(local);
 
     TcpConnectionPtr conn(new TcpConnection(loop_, connName, sockfd, localAddr, peerAddr));
-    connetions_[connName] = conn;
-    conn->setConnectionCallback(connetionCallback_);
+    connections_[connName] = conn;
+    conn->setConnectionCallback(connectionCallback_);
     conn->setMessageCallback(messagecallback_);
+    //不能用值传递conn，否则conn和lamdba相互引用，不会被析构
+    conn->setCloseCallback(
+        [this](const TcpConnectionPtr& conn) {
+            this->removeConnection(conn);
+        }
+    );
     conn->connectEstablished();
+}
+
+void TcpServer::removeConnection(const TcpConnectionPtr& conn)
+{
+    loop_->assertInLoopThread();
+    LOG_INFO << "TcpServer::removeConnection [" << name_
+        << "] - connection " << conn->name();
+    size_t n = connections_.erase(conn->name());
+    assert(n == 1);
+    //非常重要，使用queueInLoop让conn->connectDestroyed()在稍后被执行，否则conn被析构，会释放内部成员channel，但是此时channel正在执行TcpServer::removeConnection
+    loop_->queueInLoop(
+        [conn](){
+            conn->connectDestroyed();
+        }
+    );
+    //LOG_TRACE << "TcpServer::removeConnection End";
 }
