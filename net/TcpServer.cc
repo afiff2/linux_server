@@ -70,7 +70,9 @@ void TcpServer::newConnection(int sockfd, const InetAddress &peerAddr)
     TcpConnectionPtr conn(new TcpConnection(loop_, connName, sockfd, localAddr, peerAddr));
     connections_[connName] = conn;
     conn->setConnectionCallback(connectionCallback_);
-    conn->setMessageCallback(messagecallback_);
+    conn->setMessageCallback(messageCallback_);
+    conn->setWriteCompleteCallback(writeCompleteCallback_);
+    conn->setHighWaterMarkCallback(highWaterMarkCallback_, highWaterMark_);
     //不能用值传递conn，否则conn和lamdba相互引用，不会被析构
     conn->setCloseCallback(
         [this](const TcpConnectionPtr& conn) {

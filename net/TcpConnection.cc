@@ -60,39 +60,6 @@ void TcpConnection::handleRead(Timestamp receiveTime)
     }
 }
 
-void TcpConnection::handleWrite()
-{
-    loop_->assertInLoopThread();
-    if (channel_->isWriting())
-    {
-        ssize_t n = ::write(channel_->fd(), outputBuffer_.peek(), outputBuffer_.readableBytes());
-        if (n > 0)
-        {
-            outputBuffer_.retrieve(n);
-            if (outputBuffer_.readableBytes() == 0)
-            {
-                channel_->disableWriting();//防止一直发
-                if (state_ == KDisconnecting)
-                {
-                    shutdownInLoop();
-                }
-            }
-            else
-            {
-                LOG_TRACE << "I am going to write more data";
-            }
-        }
-        else
-        {
-            LOG_ERROR << "TcpConnection::handleWrite";
-        }
-    }
-    else
-    {
-        LOG_TRACE << "Connection is down, no more writing";
-    }
-}
-
 void TcpConnection::handleClose()
 {
     loop_->assertInLoopThread();
@@ -169,6 +136,8 @@ void TcpConnection::sendInLoop(const std::string &message)
         {
             if (static_cast<size_t>(nwrote) < message.size())
                 LOG_TRACE << "I am going to write more data";
+            else if (writeCompleteCallback_)
+                loop_->queueInLoop([weakSelf = shared_from_this()]() { weakSelf->writeCompleteCallback_(weakSelf); });
         }
         else
         {
@@ -183,10 +152,52 @@ void TcpConnection::sendInLoop(const std::string &message)
     assert(nwrote >= 0);
     if (static_cast<size_t>(nwrote) < message.size())
     {
+        size_t remaining = message.size() - nwrote;
+        size_t oldLen = outputBuffer_.readableBytes();
+        if (oldLen + remaining >= highWaterMark_ && oldLen < highWaterMark_ && highWaterMarkCallback_)
+            loop_->queueInLoop([weakSelf = shared_from_this(), oldLen, remaining]() { weakSelf->highWaterMarkCallback_(weakSelf,  oldLen + remaining);});
         outputBuffer_.append(message.data() + nwrote, message.size() - nwrote);
         if (!channel_->isWriting())
-        {
-            channel_->enableWriting();
-        }
+            channel_->enableWriting(); // level-triggered , 只要 socket 可写，就会持续触发写事件
     }
 }
+
+void TcpConnection::handleWrite()
+{
+    loop_->assertInLoopThread();
+    if (channel_->isWriting())
+    {
+        ssize_t n = ::write(channel_->fd(), outputBuffer_.peek(), outputBuffer_.readableBytes());
+        if (n > 0)
+        {
+            outputBuffer_.retrieve(n);
+            if (outputBuffer_.readableBytes() == 0)
+            {
+                channel_->disableWriting(); // 防止一直发
+                if (writeCompleteCallback_)
+                    loop_->queueInLoop([weakSelf = shared_from_this()]()
+                                       { weakSelf->writeCompleteCallback_(weakSelf); });
+                if (state_ == KDisconnecting)
+                {
+                    shutdownInLoop();
+                }
+            }
+            else
+            {
+                LOG_TRACE << "I am going to write more data";
+            }
+        }
+        else
+        {
+            LOG_ERROR << "TcpConnection::handleWrite";
+        }
+    }
+    else
+    {
+        LOG_TRACE << "Connection is down, no more writing";
+    }
+}
+
+void TcpConnection::setTcpNoDelay(bool on) { socket_->setTcpNoDelay(on); }
+
+void TcpConnection::setKeepAlive(bool on) { socket_->setKeepAlive(on); }

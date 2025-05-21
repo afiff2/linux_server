@@ -24,7 +24,11 @@ class TcpServer : noncopyable
 
         //Not thread safe
         void setMessageCallback(const MessageCallback& cb)
-        {messagecallback_ = cb;}
+        {messageCallback_ = cb;}
+
+        void setWriteCompleteCallback(const WriteCompleteCallback& cb) {writeCompleteCallback_ = cb;}
+
+        void setHighWaterMarkCallback(const HighWaterMarkCallback& cb, size_t highWaterMark) { highWaterMarkCallback_ = cb; highWaterMark_ = highWaterMark; }
 
     private:
         //Not thread safe but in loop
@@ -38,7 +42,10 @@ class TcpServer : noncopyable
         const std::string name_;
         std::unique_ptr <Acceptor> acceptor_;
         ConnectionCallback connectionCallback_;
-        MessageCallback messagecallback_;
+        MessageCallback messageCallback_;
+        WriteCompleteCallback writeCompleteCallback_;
+        HighWaterMarkCallback highWaterMarkCallback_;
+        size_t highWaterMark_;
         bool started_;
         int nextConnId_;//always in loop thread;
         ConnectionMap connections_;

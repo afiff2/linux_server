@@ -30,6 +30,10 @@ class TcpConnection : noncopyable, public std::enable_shared_from_this<TcpConnec
 
     void setMessageCallback(const MessageCallback &cb) { messageCallback_ = cb; }
 
+    void setWriteCompleteCallback(const WriteCompleteCallback& cb) {writeCompleteCallback_ = cb;}
+
+    void setHighWaterMarkCallback(const HighWaterMarkCallback& cb, size_t highWaterMark) { highWaterMarkCallback_ = cb; highWaterMark_ = highWaterMark; }
+
     // called when TcpServer accepts a new connection
     void connectEstablished(); // should be called only once
     //Internal use only
@@ -42,6 +46,9 @@ class TcpConnection : noncopyable, public std::enable_shared_from_this<TcpConnec
     void send(std::string message);
     //Thread safe
     void shutdown();
+
+    void setTcpNoDelay(bool on);
+    void setKeepAlive(bool on);
 
   private:
     enum StateE
@@ -70,6 +77,9 @@ class TcpConnection : noncopyable, public std::enable_shared_from_this<TcpConnec
     ConnectionCallback connectionCallback_;
     MessageCallback messageCallback_;
     CloseCallback closeCallback_;
+    WriteCompleteCallback writeCompleteCallback_;//低水位回调
+    HighWaterMarkCallback highWaterMarkCallback_;//高水位回调
+    size_t highWaterMark_;
     Buffer inputBuffer_;
     Buffer outputBuffer_;
 };

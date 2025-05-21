@@ -3,6 +3,7 @@
 #include <cstdlib>
 #include <sys/eventfd.h>
 #include <functional>
+#include <signal.h>
 
 #include "Logger.h"
 #include "Poller.h"
@@ -23,6 +24,17 @@ static int createEventfd()
     }
     return evtfd;
 }
+
+class IgnoreSigPipe
+{
+    public:
+        IgnoreSigPipe()
+        {
+            ::signal(SIGPIPE, SIG_IGN);
+        }
+};
+
+IgnoreSigPipe initobj;
 
 // 每个线程至多一个EventLoop
 EventLoop::EventLoop()
