@@ -4,6 +4,7 @@
 #include "EventLoop.h"
 #include "Socket.h"
 #include "Logger.h"
+#include "Timestamp.h"
 
 #include <cassert>
 
@@ -22,8 +23,17 @@ TcpConnection::TcpConnection(EventLoop *loop, const std::string &nameArg, int so
       channel_(new Channel(loop, sockfd)), localAddr_(localAddr), peerAddr_(peerAddr)
 {
     LOG_DEBUG << "TcpConnection::ctor[" << name_ << "] at " << this << " fd=" << sockfd;
-    channel_->setReadCallback([this](){
-        this->handleRead();
+    channel_->setReadCallback([this](Timestamp receiveTime){
+        this->handleRead(receiveTime);
+    });
+    channel_->setWriteCallback([this](){
+        this->handleWrite();
+    });
+    channel_->setCloseCallback([this](){
+        this->handleClose();
+    });
+    channel_->setErrorCallback([this](){
+        this->handleError();
     });
 }
 
@@ -43,16 +53,20 @@ void TcpConnection::connectEstablished()
     connectionCallback_(shared_from_this());
 }
 
-void TcpConnection::handleRead()
+void TcpConnection::handleRead(Timestamp receiveTime)
 {
-    char buf[65536];
-    ssize_t n = ::read(channel_->fd(), buf, sizeof buf);
+    int savedErrno = 0;
+    ssize_t n = inputBuffer_.readFd(channel_->fd(), &savedErrno);
     if(n > 0)
-        messageCallback_(shared_from_this(), buf, n);
+        messageCallback_(shared_from_this(), &inputBuffer_, n);
     else if(n==0)
         handleClose();
     else
         handleError();
+}
+
+void TcpConnection::handleWrite()
+{
 }
 
 void TcpConnection::handleClose()

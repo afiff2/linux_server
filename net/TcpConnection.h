@@ -10,6 +10,8 @@
 class Channel;
 class EventLoop;
 class Socket;
+class Timestamp;
+class Buffer;
 
 class TcpConnection : noncopyable, public std::enable_shared_from_this<TcpConnection>
 {
@@ -45,7 +47,7 @@ class TcpConnection : noncopyable, public std::enable_shared_from_this<TcpConnec
     };
 
     void setState(StateE s) { state_ = s; }
-    void handleRead();
+    void handleRead(Timestamp receiveTime);
     void handleWrite();
     void handleClose();
     void handleError();
@@ -60,4 +62,5 @@ class TcpConnection : noncopyable, public std::enable_shared_from_this<TcpConnec
     ConnectionCallback connectionCallback_;
     MessageCallback messageCallback_;
     CloseCallback closeCallback_;
+    Buffer inputBuffer_;
 };

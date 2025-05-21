@@ -1,19 +1,22 @@
 #include <sys/timerfd.h>
 #include "EventLoop.h"
 #include "Channel.h"
+#include "Timestamp.h"
 
 #include <cstdio>
 #include <string.h>
 
 EventLoop* g_loop;
 
-void timeout(){
-    printf("Timeout!\n");
-    g_loop->quit();
+void timeout(Timestamp receiveTime)
+{
+  printf("%s Timeout!\n", receiveTime.toFormattedString().c_str());
+  g_loop->quit();
 }
 
 int main()
 {
+    printf("%s started\n", Timestamp::now().toFormattedString().c_str());
     EventLoop loop;
     g_loop = &loop;
     int timerfd = ::timerfd_create(CLOCK_MONOTONIC, TFD_NONBLOCK | TFD_CLOEXEC);

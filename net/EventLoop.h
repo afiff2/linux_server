@@ -53,7 +53,7 @@ class EventLoop : noncopyable
         void runInLoop(const Functor& cb);
         void queueInLoop(const Functor& cb);
 
-
+        Timestamp pollReturnTime() const {return pollReturnTime_;}
     
     private:
         using ChannelList = std::vector<Channel*>;

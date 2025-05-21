@@ -2,6 +2,7 @@
 #include "EventLoop.h"
 #include "InetAddress.h"
 #include "TcpConnection.h"
+#include "Buffer.h"
 #include <stdio.h>
 
 void onConnection(const TcpConnectionPtr& conn)
@@ -20,7 +21,7 @@ void onConnection(const TcpConnectionPtr& conn)
 }
 
 void onMessage(const TcpConnectionPtr& conn,
-               const char* data,
+               Buffer* buf,
                ssize_t len)
 {
   printf("onMessage(): received %zd bytes from connection [%s]\n",
