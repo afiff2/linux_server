@@ -38,12 +38,18 @@ class TcpConnection : noncopyable, public std::enable_shared_from_this<TcpConnec
     // called when TcpServer accepts a new connection
     void connectDestroyed();// should be called only once
 
+    //建议输入右值引用
+    void send(std::string message);
+    //Thread safe
+    void shutdown();
+
   private:
     enum StateE
     {
-        KConnecting,
-        KConnected,
-        KDisconnected,
+      KConnecting,
+      KConnected,
+      KDisconnecting,
+      KDisconnected,
     };
 
     void setState(StateE s) { state_ = s; }
@@ -51,6 +57,8 @@ class TcpConnection : noncopyable, public std::enable_shared_from_this<TcpConnec
     void handleWrite();
     void handleClose();
     void handleError();
+    void sendInLoop(const std::string& message);
+    void shutdownInLoop();
 
     EventLoop *loop_;
     std::string name_;
@@ -63,4 +71,5 @@ class TcpConnection : noncopyable, public std::enable_shared_from_this<TcpConnec
     MessageCallback messageCallback_;
     CloseCallback closeCallback_;
     Buffer inputBuffer_;
+    Buffer outputBuffer_;
 };

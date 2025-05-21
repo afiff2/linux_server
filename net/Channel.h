@@ -31,8 +31,9 @@ class Channel : noncopyable
 
         void enableReading() {events_ |= KReadEvent; update();}
         void enableWriting() {events_ |= KWriteEvent; update();}
-        void disableReading() {events_ &= ~KWriteEvent; update();}
+        void disableWriting() {events_ &= ~KWriteEvent; update();}
         void disableAll() {events_ = KNoneEvent; update();}
+        bool isWriting() const {return events_ & KWriteEvent;}
 
         //for Poller
         int index() { return index_; }
