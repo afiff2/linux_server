@@ -22,10 +22,14 @@ void onConnection(const TcpConnectionPtr& conn)
 
 void onMessage(const TcpConnectionPtr& conn,
                Buffer* buf,
-               ssize_t len)
+               Timestamp receiveTime)
 {
-  printf("onMessage(): received %zd bytes from connection [%s]\n",
-         len, conn->name().c_str());
+  printf("onMessage(): received %zd bytes from connection [%s] at %s\n",
+         buf->readableBytes(),
+         conn->name().c_str(),
+         receiveTime.toFormattedString().c_str());
+
+  printf("onMessage(): [%s]\n", buf->retrieveAllAsString().c_str());
 }
 
 int main()

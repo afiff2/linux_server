@@ -3,6 +3,7 @@
 #include "Callbacks.h"
 #include "InetAddress.h"
 #include "noncopyable.h"
+#include "Buffer.h"
 #include <memory>
 #include <string>
 #include <functional>
@@ -11,7 +12,6 @@ class Channel;
 class EventLoop;
 class Socket;
 class Timestamp;
-class Buffer;
 
 class TcpConnection : noncopyable, public std::enable_shared_from_this<TcpConnection>
 {
