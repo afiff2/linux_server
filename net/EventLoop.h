@@ -54,6 +54,8 @@ class EventLoop : noncopyable
         void queueInLoop(const Functor& cb);
 
         Timestamp pollReturnTime() const {return pollReturnTime_;}
+
+        void cancel(TimerId a) {};
     
     private:
         using ChannelList = std::vector<Channel*>;

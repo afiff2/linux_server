@@ -6,6 +6,7 @@
 #include "Logger.h"
 #include "TcpConnection.h"
 #include "Acceptor.h"
+#include "EventLoopThreadPool.h"
 #include <cassert>
 
 static EventLoop *CHECK_NOTNULL(EventLoop *loop)
@@ -19,7 +20,7 @@ static EventLoop *CHECK_NOTNULL(EventLoop *loop)
 
 TcpServer::TcpServer(EventLoop *loop, const InetAddress &listenAddr)
     : loop_(CHECK_NOTNULL(loop)), name_(listenAddr.toIpPort()), acceptor_(new Acceptor(loop, listenAddr)),
-      started_(false), nextConnId_(1)
+      started_(false), nextConnId_(1), threadPool_(new EventLoopThreadPool(loop))
 {
     acceptor_->setNewConnectionCallback(
         [this](int sockfd, const InetAddress &peerAddr){
@@ -33,10 +34,19 @@ TcpServer::~TcpServer()
 
 }
 
+void TcpServer::setThreadNum(int numThreads)
+{
+    assert(numThreads>=0);
+    threadPool_->setThreadNum(numThreads);
+}
+
 void TcpServer::start()
 {
     if(!started_)
+    {
         started_ = true;
+        threadPool_->start();
+    }
     
     if(!acceptor_->listenning())
         loop_->runInLoop(
@@ -66,8 +76,10 @@ void TcpServer::newConnection(int sockfd, const InetAddress &peerAddr)
     }
 
     InetAddress localAddr(local);
+    
+    EventLoop* ioLoop = threadPool_->getNextLoop();
 
-    TcpConnectionPtr conn(new TcpConnection(loop_, connName, sockfd, localAddr, peerAddr));
+    TcpConnectionPtr conn(new TcpConnection(ioLoop, connName, sockfd, localAddr, peerAddr));
     connections_[connName] = conn;
     conn->setConnectionCallback(connectionCallback_);
     conn->setMessageCallback(messageCallback_);
@@ -79,18 +91,26 @@ void TcpServer::newConnection(int sockfd, const InetAddress &peerAddr)
             this->removeConnection(conn);
         }
     );
-    conn->connectEstablished();
+    ioLoop->runInLoop([conn](){conn->connectEstablished();});
 }
 
 void TcpServer::removeConnection(const TcpConnectionPtr& conn)
 {
+    loop_->runInLoop([this,conn](){this->removeConnectionInLoop(conn);});
+}
+
+
+
+void TcpServer::removeConnectionInLoop(const TcpConnectionPtr& conn)
+{
     loop_->assertInLoopThread();
-    LOG_INFO << "TcpServer::removeConnection [" << name_
+    LOG_INFO << "TcpServer::removeConnectionInLoop [" << name_
         << "] - connection " << conn->name();
     size_t n = connections_.erase(conn->name());
     assert(n == 1);
-    //非常重要，使用queueInLoop让conn->connectDestroyed()在稍后被执行，否则conn被析构，会释放内部成员channel，但是此时channel正在执行TcpServer::removeConnection
-    loop_->queueInLoop(
+    EventLoop* ioLoop = conn->getLoop();
+    //非常重要，使用queueInLoop让conn->connectDestroyed()在稍后被执行，否则conn被析构，会释放内部成员channel，但是此时channel正在执行TcpServer::removeConnectionInLoop
+    ioLoop->queueInLoop(
         [conn](){
             conn->connectDestroyed();
         }

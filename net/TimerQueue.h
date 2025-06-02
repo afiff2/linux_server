@@ -21,10 +21,10 @@ class TimerQueue : noncopyable
         //void cancel(TimerId timerId);
 
     private:
-        using Entry = std::pair<Timestamp, std::unique_ptr<Timer>>;
+        using Entry = std::pair<Timestamp, std::shared_ptr<Timer>>;
         using TimerSet = std::set<Entry>;
 
-        void addTimerInLoop(Timer *timer);
+        void addTimerInLoop(std::shared_ptr<Timer> timer);
 
         void handleRead();
 
@@ -32,7 +32,7 @@ class TimerQueue : noncopyable
         std::vector<Entry> getExpired(Timestamp now);
         void reset(std::vector<Entry>& expired, Timestamp now);
 
-        bool insert(std::unique_ptr<Timer> timer);
+        bool insert(std::shared_ptr<Timer> timer);
 
         void updateTimerFd(Timestamp expiration);
 

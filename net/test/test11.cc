@@ -6,6 +6,8 @@
 #include "Buffer.h"
 #include <stdio.h>
 
+std::string message;
+
 void onConnection(const TcpConnectionPtr& conn)
 {
   if (conn->connected())
@@ -14,6 +16,7 @@ void onConnection(const TcpConnectionPtr& conn)
            CurrentThread::tid(),
            conn->name().c_str(),
            conn->peerAddress().toIpPort().c_str());
+    conn->send(message);
   }
   else
   {
@@ -21,6 +24,11 @@ void onConnection(const TcpConnectionPtr& conn)
            CurrentThread::tid(),
            conn->name().c_str());
   }
+}
+
+void onWriteComplete(const TcpConnectionPtr& conn)
+{
+  conn->send(message);
 }
 
 void onMessage(const TcpConnectionPtr& conn,
@@ -33,12 +41,24 @@ void onMessage(const TcpConnectionPtr& conn,
          conn->name().c_str(),
          receiveTime.toFormattedString().c_str());
 
-  conn->send(buf->retrieveAllAsString());
+  buf->retrieveAll();
 }
 
 int main(int argc, char* argv[])
 {
   printf("main(): pid = %d\n", getpid());
+
+  std::string line;
+  for (int i = 33; i < 127; ++i)
+  {
+    line.push_back(char(i));
+  }
+  line += line;
+
+  for (size_t i = 0; i < 127-33; ++i)
+  {
+    message += line.substr(i, 72) + '\n';
+  }
 
   InetAddress listenAddr(9981);
   EventLoop loop;
@@ -46,6 +66,7 @@ int main(int argc, char* argv[])
   TcpServer server(&loop, listenAddr);
   server.setConnectionCallback(onConnection);
   server.setMessageCallback(onMessage);
+  server.setWriteCompleteCallback(onWriteComplete);
   if (argc > 1) {
     server.setThreadNum(atoi(argv[1]));
   }

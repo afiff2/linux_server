@@ -45,17 +45,20 @@ TimerQueue::~TimerQueue() { ::close(timerfd_); }
 TimerId TimerQueue::addTimer(const Timer::TimerCallback &cb, Timestamp when, double interval)
 {
 
-    Timer *ti = new Timer(cb, when, interval);
+    std::shared_ptr<Timer> timer = std::make_shared<Timer>(cb, when, interval);
 
-    loop_->runInLoop(std::bind(&TimerQueue::addTimerInLoop, this, ti));
-    return TimerId(ti);
+    loop_->runInLoop([this, timer]() {
+        this->addTimerInLoop(timer);
+    });
+
+    return TimerId(timer);
 }
 
-void TimerQueue::addTimerInLoop(Timer *timer)
+void TimerQueue::addTimerInLoop(std::shared_ptr<Timer> timer)
 {
     loop_->assertInLoopThread();
-    std::unique_ptr<Timer> timerPtr(timer);
-    bool earliestChanged = insert(std::move(timerPtr));
+    std::shared_ptr<Timer> timerPtr(timer);
+    bool earliestChanged = insert(timerPtr);
 
     if (earliestChanged)
     {
@@ -89,14 +92,14 @@ std::vector<TimerQueue::Entry> TimerQueue::getExpired(Timestamp now)
 {
     std::vector<Entry> expired;
 
-    Entry sentry = std::make_pair(now, std::unique_ptr<Timer>(nullptr));
+    Entry sentry = std::make_pair(now, std::shared_ptr<Timer>(nullptr));
 
     auto end = timers_.lower_bound(sentry);
     assert(end == timers_.end() || now < end->first);
 
     for (auto it = timers_.begin(); it != end; ++it)
     {
-        expired.emplace_back(std::move(const_cast<Entry &>(*it)));
+        expired.emplace_back(*it);
     }
     timers_.erase(timers_.begin(), end);
 
@@ -106,13 +109,13 @@ std::vector<TimerQueue::Entry> TimerQueue::getExpired(Timestamp now)
 void TimerQueue::reset(std::vector<Entry> &expired, Timestamp now)
 {
     Timestamp nextExpire = Timestamp::invalid();
-    for (auto &it : expired)
+    for (const auto &it : expired)
     {
-        std::unique_ptr<Timer> timer = std::move(it.second);
+        std::shared_ptr<Timer> timer = it.second;
         if (timer->repeat())
         {
             timer->restart(now);
-            insert(std::move(timer));
+            insert(timer);
         }
     }
     if (!timers_.empty())
@@ -126,7 +129,7 @@ void TimerQueue::reset(std::vector<Entry> &expired, Timestamp now)
     }
 }
 
-bool TimerQueue::insert(std::unique_ptr<Timer> timer)
+bool TimerQueue::insert(std::shared_ptr<Timer> timer)
 {
     Timestamp when = timer->expiration();
     LOG_TRACE << "Adding timer at " << when.secondsSinceEpoch() << " Now is " << Timestamp::now().secondsSinceEpoch();
@@ -138,7 +141,7 @@ bool TimerQueue::insert(std::unique_ptr<Timer> timer)
         earliestChanged = true;
     }
 
-    std::pair<TimerSet::iterator, bool> result = timers_.insert(std::make_pair(when, std::move(timer)));
+    std::pair<TimerSet::iterator, bool> result = timers_.insert(std::make_pair(when, timer));
     assert(result.second);
 
     return earliestChanged;
