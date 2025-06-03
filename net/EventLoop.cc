@@ -180,3 +180,8 @@ void EventLoop::removeChannel(Channel* channel)
   assertInLoopThread();
   poller_->removeChannel(channel);
 }
+
+void EventLoop::cancel(TimerId timerId)
+{
+    return timerQueue_->cancel(timerId);
+}

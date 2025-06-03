@@ -29,7 +29,7 @@ struct timespec toTimeSpec(Timestamp when)
 
 TimerQueue::TimerQueue(EventLoop *loop)
     : loop_(loop), timerfd_(::timerfd_create(CLOCK_MONOTONIC, TFD_NONBLOCK | TFD_CLOEXEC)),
-      timerfdChannel_(loop_, timerfd_)
+      timerfdChannel_(loop_, timerfd_), callingExpiredTimers_(false)
 {
     if (timerfd_ < 0)
     {
@@ -54,11 +54,10 @@ TimerId TimerQueue::addTimer(const Timer::TimerCallback &cb, Timestamp when, dou
     return TimerId(timer);
 }
 
-void TimerQueue::addTimerInLoop(std::shared_ptr<Timer> timer)
+void TimerQueue::addTimerInLoop(const std::shared_ptr<Timer>& timer)
 {
     loop_->assertInLoopThread();
-    std::shared_ptr<Timer> timerPtr(timer);
-    bool earliestChanged = insert(timerPtr);
+    bool earliestChanged = insert(timer);
 
     if (earliestChanged)
     {
@@ -80,12 +79,20 @@ void TimerQueue::handleRead()
     }
 
     std::vector<Entry> expired = getExpired(now);
+
+    callingExpiredTimers_ = true;
+    cancelingTimers_.clear();
+
     for (const auto &it : expired)
     {
         it.second->run(); // 执行回调
     }
+    
 
     reset(expired, now);
+
+    callingExpiredTimers_ = false;
+    cancelingTimers_.clear();
 }
 
 std::vector<TimerQueue::Entry> TimerQueue::getExpired(Timestamp now)
@@ -97,21 +104,23 @@ std::vector<TimerQueue::Entry> TimerQueue::getExpired(Timestamp now)
     auto end = timers_.lower_bound(sentry);
     assert(end == timers_.end() || now < end->first);
 
-    for (auto it = timers_.begin(); it != end; ++it)
-    {
-        expired.emplace_back(*it);
-    }
+    expired.assign(timers_.begin(), end);
     timers_.erase(timers_.begin(), end);
 
     return expired;
 }
 
-void TimerQueue::reset(std::vector<Entry> &expired, Timestamp now)
+void TimerQueue::reset(const std::vector<Entry> &expired, Timestamp now)
 {
     Timestamp nextExpire = Timestamp::invalid();
     for (const auto &it : expired)
     {
         std::shared_ptr<Timer> timer = it.second;
+        if(cancelingTimers_.count(timer))
+        {
+            LOG_TRACE << "Timer was canceled during callback, not re-adding";
+            timer->cancel();
+        }
         if (timer->repeat())
         {
             timer->restart(now);
@@ -161,4 +170,39 @@ void TimerQueue::updateTimerFd(Timestamp expiration)
     {
         LOG_ERROR << "timerfd_settime failed";
     }
+}
+
+void TimerQueue::cancel(TimerId timerId)
+{
+    loop_->runInLoop(
+        [this,timerId](){this->cancelInLoop(timerId);}
+    );
+}
+
+void TimerQueue::cancelInLoop(TimerId timerId)
+{
+    loop_->assertInLoopThread();
+
+    auto timer = timerId.timer();
+    if (!timer) return;
+
+    auto compare = [timer](const Entry& entry) {
+        return entry.second.get() == timer.get();
+    };
+
+    for (auto it = timers_.begin(); it != timers_.end(); ++it)
+        if (compare(*it))
+        {
+            LOG_TRACE << "Cancel timer immediately";
+            it->second->cancel();
+            timers_.erase(it);
+            return;
+        }
+    
+    if(callingExpiredTimers_)//timer可能在getExpired函数中
+    {
+        LOG_TRACE << "Delay cancel timer (in callback)";
+        cancelingTimers_.insert(timer);
+    }
+
 }
