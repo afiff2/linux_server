@@ -99,7 +99,6 @@ void TcpClient::connect()
 void TcpClient::disconnect()
 {
     connect_ = false;
-
     {
         std::lock_guard<std::mutex> lock(mutex_);
         if (connection_)
@@ -154,7 +153,7 @@ void TcpClient::removeConnection(const TcpConnectionPtr &conn)
         connection_.reset();
     }
 
-    loop_->queueInLoop(std::bind(&TcpConnection::connectDestroyed, conn));
+    loop_->queueInLoop([conn](){conn->connectDestroyed();});
     if (retry_ && connect_)
     {
         LOG_INFO << "TcpClient::connect[" << name_ << "] - Reconnecting to " << connector_->serverAddress().toIpPort();

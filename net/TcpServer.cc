@@ -109,7 +109,7 @@ void TcpServer::removeConnectionInLoop(const TcpConnectionPtr& conn)
     size_t n = connections_.erase(conn->name());
     assert(n == 1);
     EventLoop* ioLoop = conn->getLoop();
-    //非常重要，使用queueInLoop让conn->connectDestroyed()在稍后被执行，否则conn被析构，会析构内部成员channel，但是此时channel正在执行TcpServer::removeConnectionInLoop
+    //非常重要，使用queueInLoop让conn->connectDestroyed()在稍后被执行，延长conn生命。否则conn被立即析构，同时会析构内部成员channel，但是此时channel正在执行TcpServer::removeConnectionInLoop
     ioLoop->queueInLoop(
         [conn](){
             conn->connectDestroyed();
