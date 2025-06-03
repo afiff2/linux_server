@@ -5,6 +5,9 @@
 #include "Logger.h"
 #include <cassert>
 
+const int Connector::kMaxRetryDelayMs;
+const int Connector::kInitRetryDelayMs;
+
 static int createNonblockingSocket()
 {
     int sockfd = ::socket(AF_INET, SOCK_STREAM | SOCK_NONBLOCK, IPPROTO_TCP);

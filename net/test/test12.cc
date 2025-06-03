@@ -18,9 +18,9 @@ int main(int argc, char* argv[])
   EventLoop loop;
   g_loop = &loop;
   InetAddress addr(9981, "127.0.0.1");
-  // ConnectorPtr connector(new Connector(&loop, addr));
-  // connector->setNewConnectionCallback(connectCallback);
-  // connector->start();
+  ConnectorPtr connector(new Connector(&loop, addr));
+  connector->setNewConnectionCallback(connectCallback);
+  connector->start();
 
-  // loop.loop();
+  loop.loop();
 }
