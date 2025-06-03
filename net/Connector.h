@@ -24,6 +24,8 @@ class Connector : noncopyable
         void restart(); // must be called in loop thread
         void stop(); // any thread
 
+        const InetAddress& serverAddress() const { return serverAddr_;}
+
     private:
         enum States { kDisconnected, kConnecting, kConnected };
         static const int kMaxRetryDelayMs = 30*1000;
