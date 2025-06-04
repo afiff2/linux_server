@@ -38,7 +38,7 @@ IgnoreSigPipe initobj;
 
 // 每个线程至多一个EventLoop
 EventLoop::EventLoop()
-    : looping_(false), threadId_(CurrentThread::tid()), poller_(new Poller(this)), timerQueue_(new TimerQueue(this)),
+    : looping_(false), threadId_(CurrentThread::tid()), poller_(Poller::newDefaultPoller(this)), timerQueue_(new TimerQueue(this)),
       wakeupFd_(createEventfd()), wakeupChannel_(new Channel(this, wakeupFd_))
 {
     LOG_TRACE << "EventLoop created " << this << " in thread " << threadId_;

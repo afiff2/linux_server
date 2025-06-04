@@ -53,7 +53,7 @@ class Channel : noncopyable
         const int fd_;
         int events_;
         int revents_;
-        int index_; //该Channel对应pollfdlist_中的第index_个pollfd
+        int index_; //该Channel对应pollfdlist_中的第index_个pollfd，或者Epoll中的状态
         bool eventHandling_;
 
         ReadEventCallback readCallback_;
