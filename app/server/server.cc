@@ -42,7 +42,7 @@ int main(int argc, char* argv[])
 
     // —— 2. 构造 TcpServer —— 
     EventLoop loop;
-    InetAddress listenAddr(8080);
+    InetAddress listenAddr(8080, "0.0.0.0");
     TcpServer server(&loop, listenAddr);
     server.setThreadNum(3);
 

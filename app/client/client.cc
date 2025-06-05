@@ -85,8 +85,10 @@ void clientThreadFunc(int threadNum)
         {
             std::string echo = buf->retrieveAllAsString();
             ++(*recvCount);
-            LOG_INFO << clientName << " - Received echo length  [" << echo.size() << "] " << *recvCount
-                    << " at " << recvTime.toFormattedString().c_str();
+            LOG_INFO << clientName
+                     << " - Received echo len=" << echo.size()
+                     << ", count=" << *recvCount
+                     << " at " << recvTime.toFormattedString().c_str();
         });
 
     client.connect();
