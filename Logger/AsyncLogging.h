@@ -41,23 +41,27 @@ public:
 
 private:
     using LargeBuffer = FixedBuffer<kLargeBufferSize>;
-    using BufferVector = std::vector<std::unique_ptr<LargeBuffer>>;
-    using BufferPtr = std::unique_ptr<LargeBuffer>;
+    using BufferPtr   = std::unique_ptr<LargeBuffer>;
+    using BufferVector = std::vector<BufferPtr>;
+
     void threadFunc();
-    
-    const int flushInterval_;         // 日志刷新时间
+
+    const int flushInterval_; // 日志刷新时间
     std::atomic<bool> running_;
     const std::string basename_;
     const off_t rollSize_;
     Thread thread_;
     std::mutex mutex_;
     std::condition_variable cond_;
-    
+
     BufferPtr currentBuffer_;
-    // 扩充前端缓冲区数量到8个
-    // currentBuffer_ + freeBuffers_ 中的缓冲区总数就是8个
+
+    // 这里拆成两个常量：前端备用缓冲池大小 和 后端备用缓冲池大小
+    static const int frontBuffers = 2; // 前端除 current 外，最多保留 2 张备用
+    static const int backBuffers  = 6; // 后端每次一轮想保留 6 张用于下一轮预分配
+
+    // “前端备用”缓冲区，最多 frontBuffers 个
     BufferVector freeBuffers_;
-    BufferVector buffers_;  // 待写入后端线程的已满缓冲区
-    
-    static const int maxFreeBuffers = 7; // 备用缓冲区上限（不包括 currentBuffer_）
+    // “待写队列”：前端写满时把 full buffer push 到这里
+    BufferVector buffers_;
 };
