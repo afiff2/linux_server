@@ -36,7 +36,7 @@ static const int kThreadCount = 20;
 
 // 每个线程在一次连接里要发的消息数
 // 建议设置成较大的数字，比如 50k、100k，以制造足够压力
-static const int kMessagesPerThread = 50000;
+static const int kMessagesPerThread = 1000000;
 
 // 服务器地址
 static const int kServerPort = 8080;
@@ -85,7 +85,7 @@ void clientThreadFunc(int threadNum)
         {
             std::string echo = buf->retrieveAllAsString();
             ++(*recvCount);
-            LOG_INFO << clientName << " - Received echo [" << echo << "] " << *recvCount
+            LOG_INFO << clientName << " - Received echo length  [" << echo.size() << "] " << *recvCount
                     << " at " << recvTime.toFormattedString().c_str();
         });
 
