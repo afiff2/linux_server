@@ -1,7 +1,6 @@
 #include <chrono>
 #include <iostream>
 #include <memory>
-#include <random>
 #include <string>
 #include <sys/stat.h>
 #include <thread>
@@ -35,24 +34,16 @@ void asyncLog(const char* msg, int len)
 // 并发线程数
 static const int kThreadCount = 20;
 
-// 每个客户端线程要发送的最小和最大消息数
-static const int kMinMessages = 10;
-static const int kMaxMessages = 100;
+// 每个线程在一次连接里要发的消息数
+// 建议设置成较大的数字，比如 50k、100k，以制造足够压力
+static const int kMessagesPerThread = 50000;
 
 // 服务器地址
 static const int kServerPort = 8080;
 static const char *kServerIp = "127.0.0.1";
 
-// 线程函数：每个线程启动一个 EventLoop + TcpClient
-// 随机决定向服务器发送 [kMinMessages, kMaxMessages] 条消息，然后断开
 void clientThreadFunc(int threadNum)
 {
-    // 生成随机种子,时间加序列号
-    std::mt19937 rng(static_cast<unsigned long>(std::chrono::high_resolution_clock::now().time_since_epoch().count()) +
-                     threadNum);
-    std::uniform_int_distribution<int> dist(kMinMessages, kMaxMessages);
-    int messagesToSend = dist(rng);
-
     EventLoop loop;
     InetAddress serverAddr(kServerPort, kServerIp);
 
@@ -63,56 +54,44 @@ void clientThreadFunc(int threadNum)
 
     TcpClient client(&loop, serverAddr, clientName);
     client.enableRetry(); // 如果连接失败，自动重连
-
-    // 记录已经发送和收到的消息数
-    std::shared_ptr<int> sentCount(new int(0));
-    std::shared_ptr<int> recvCount(new int(0));
-
-    // 连接建立/断开时的回调
+    
     client.setConnectionCallback(
-        [clientName, sentCount, &loop](const TcpConnectionPtr &conn)
-        {
+        [clientName, &loop](const TcpConnectionPtr& conn) {
             if (conn->connected())
             {
                 LOG_INFO << clientName << " - Connected to server: " << conn->peerAddress().toIpPort().c_str();
-                // 立刻发送第一条消息
-                std::string msg = "Hello from " + clientName + " (" + std::to_string(*sentCount + 1) + ")\n";
-                conn->send(msg);
-                (*sentCount)++;
+
+                std::string base = "Hello from " + clientName + " #";
+                for (int i = 1; i <= kMessagesPerThread; ++i)
+                {
+                    std::string msg = base + std::to_string(i) + "\n";
+                    conn->send(msg);
+                }
+
+                conn->shutdown();
             }
             else
             {
                 LOG_INFO << clientName << " - Disconnected from server";
-                // 当连接断开后，结束 EventLoop，线程将退出
                 loop.quit();
             }
-        });
+        }
+    );
 
-    // 收到服务器回显消息时的回调
+    std::shared_ptr<int> recvCount(new int(0));
+
     client.setMessageCallback(
-        [clientName, sentCount, recvCount, &messagesToSend, &client, &loop](const TcpConnectionPtr &conn, Buffer *buf,
-                                                                            Timestamp recvTime)
+        [clientName, recvCount](const TcpConnectionPtr &conn, Buffer *buf, Timestamp recvTime)
         {
             std::string echo = buf->retrieveAllAsString();
-            (*recvCount)++;
-            LOG_INFO << clientName << " - Received echo [" << echo.substr(0, echo.size() - 1) << "] " << *recvCount
-                     << "/" << *sentCount << " at " << recvTime.toFormattedString().c_str();
-
-            // 如果还没达到要发送的总数，就发下一条
-            if (*sentCount < messagesToSend)
-            {
-                std::string msg = "Hello from " + clientName + " (" + std::to_string(*sentCount + 1) + ")\n";
-                conn->send(msg);
-                (*sentCount)++;
-            }
-            else
-                conn->shutdown();
+            ++(*recvCount);
+            LOG_INFO << clientName << " - Received echo [" << echo << "] " << *recvCount
+                    << " at " << recvTime.toFormattedString().c_str();
         });
 
     client.connect();
     loop.loop();
-    LOG_INFO << clientName << " - Thread exiting after sending " << *sentCount << " messages and receiving "
-             << *recvCount;
+    LOG_INFO << clientName << " - Thread exiting after sending " << kMessagesPerThread << " messages and receiving " << *recvCount;
 }
 
 int main(int argc, char *argv[])
@@ -128,7 +107,7 @@ int main(int argc, char *argv[])
     Logger::setOutput(asyncLog);
     log.start();
 
-    LOG_INFO << "Client starting stress test";
+    std::cout << "Client starting stress test\n";
 
     // —— 2. 启动多个客户端线程做压力测试 ——
     std::vector<std::unique_ptr<Thread>> threads;
@@ -148,7 +127,7 @@ int main(int argc, char *argv[])
         thr->join();
     }
 
-    LOG_INFO << "All client threads finished";
+    std::cout << "All client threads finished\n";
 
     // —— 3. 所有线程发送完成后，向服务器发送 "shutdown" ——
     {
@@ -180,7 +159,7 @@ int main(int argc, char *argv[])
         shutdownClient.enableRetry();
         shutdownClient.connect();
         loop.loop();
-        LOG_INFO << "Shutdown command sent, exiting client";
+        std::cout << "Shutdown command sent, exiting client\n";
     }
 
     // —— 4. 停止异步日志 ——
