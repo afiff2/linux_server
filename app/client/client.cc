@@ -56,7 +56,7 @@ void clientThreadFunc(int threadNum)
     client.enableRetry(); // 如果连接失败，自动重连
     
     client.setConnectionCallback(
-        [clientName, &loop](const TcpConnectionPtr& conn) {
+        [&client, clientName, &loop](const TcpConnectionPtr& conn) {
             if (conn->connected())
             {
                 LOG_INFO << clientName << " - Connected to server: " << conn->peerAddress().toIpPort().c_str();
@@ -68,7 +68,7 @@ void clientThreadFunc(int threadNum)
                     conn->send(msg);
                 }
 
-                conn->shutdown();
+                client.disconnect();
             }
             else
             {
@@ -145,7 +145,6 @@ int main(int argc, char *argv[])
                 {
                     LOG_WARN << "Sending shutdown command to server";
                     conn->send("shutdown\n");
-                    conn->shutdown();
                 }
                 else
                 {
