@@ -42,6 +42,7 @@ static void defaultFlush()
 }
 Logger::OutputFunc g_output = defaultOutput;
 Logger::FlushFunc g_flush = defaultFlush;
+Logger::LogLevel Logger::g_logLevel = Logger::INFO;
 
 Logger::Impl::Impl(Logger::LogLevel level, int savedErrno, const char *filename, int line)
     : time_(Timestamp::now()),

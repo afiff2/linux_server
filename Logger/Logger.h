@@ -51,6 +51,10 @@ public:
     // 流是会改变的
     LogStream& stream() { return impl_.stream_; }
 
+    static void setLogLevel(LogLevel level) { g_logLevel = level; }
+    static LogLevel logLevel() { return g_logLevel; }
+
+
 
     // 输出函数和刷新缓冲区函数
     using OutputFunc = std::function<void(const char* msg, int len)>;
@@ -73,9 +77,8 @@ private:
         int line_;
         SourceFile basename_;
     };
-
-private:
     Impl impl_;
+    static LogLevel g_logLevel;
 };
 
 // 获取errno信息
@@ -85,12 +88,41 @@ const char* getErrnoMsg(int savedErrno);
  * 比如设置等级为FATAL，则logLevel等级大于DEBUG和INFO，DEBUG和INFO等级的日志就不会输出
  */
 #ifdef OPEN_LOGGING
-#define LOG_TRACE Logger(__FILE__, __LINE__, Logger::TRACE).stream()
-#define LOG_DEBUG Logger(__FILE__, __LINE__, Logger::DEBUG).stream()
-#define LOG_INFO Logger(__FILE__, __LINE__, Logger::INFO).stream()
-#define LOG_WARN Logger(__FILE__, __LINE__, Logger::WARN).stream()
-#define LOG_ERROR Logger(__FILE__, __LINE__, Logger::ERROR).stream()
-#define LOG_FATAL Logger(__FILE__, __LINE__, Logger::FATAL).stream()
+#define LOG_TRACE                                           \
+    if (Logger::TRACE < Logger::logLevel())                 \
+        ;                                                   \
+    else                                                    \
+        Logger(__FILE__, __LINE__, Logger::TRACE).stream()
+
+#define LOG_DEBUG                                           \
+    if (Logger::DEBUG < Logger::logLevel())                 \
+        ;                                                   \
+    else                                                    \
+        Logger(__FILE__, __LINE__, Logger::DEBUG).stream()
+
+#define LOG_INFO                                            \
+    if (Logger::INFO < Logger::logLevel())                  \
+        ;                                                   \
+    else                                                    \
+        Logger(__FILE__, __LINE__, Logger::INFO).stream()
+
+#define LOG_WARN                                            \
+    if (Logger::WARN < Logger::logLevel())                  \
+        ;                                                   \
+    else                                                    \
+        Logger(__FILE__, __LINE__, Logger::WARN).stream()
+
+#define LOG_ERROR                                           \
+    if (Logger::ERROR < Logger::logLevel())                 \
+        ;                                                   \
+    else                                                    \
+        Logger(__FILE__, __LINE__, Logger::ERROR).stream()
+
+#define LOG_FATAL                                           \
+    if (Logger::FATAL < Logger::logLevel())                 \
+        ;                                                   \
+    else                                                    \
+        Logger(__FILE__, __LINE__, Logger::FATAL).stream()
 #else
 #define LOG(level) LogStream()
 #endif
