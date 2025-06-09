@@ -5,6 +5,7 @@
 - 加入双缓冲机制的日志系统（AsyncLogging）
 
 ## 目录结构说明
+```
 ├── app # 应用层
 │ ├── client # 客户端程序
 │ │ └── client.cc # 压力测试客户端
@@ -14,8 +15,10 @@
 ├── Logger # 日志模块
 ├── net # 网络模块
 └── Thread # 线程封装
-
+```
 ## 编译方式
+```
 mkdir build && cd build
 cmake ..
 make -j
+```
