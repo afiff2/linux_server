@@ -91,9 +91,21 @@ void clientThreadFunc(int threadNum)
                      << " at " << recvTime.toFormattedString().c_str();
         });
 
+    // 记录线程开始时间，用于计算本线程 QPS
+    auto threadStart = std::chrono::steady_clock::now();
+
     client.connect();
     loop.loop();
-    LOG_INFO << clientName << " - Thread exiting after sending " << kMessagesPerThread << " messages and receiving " << *recvCount;
+
+    // 线程结束，计算耗时和 QPS
+    auto threadEnd = std::chrono::steady_clock::now();
+    std::chrono::duration<double> threadDuration = threadEnd - threadStart;
+    double threadQps = kMessagesPerThread / threadDuration.count();
+    LOG_INFO << clientName
+             << " - Thread exiting after sending " << kMessagesPerThread
+             << " messages and receiving " << *recvCount
+             << ", duration=" << threadDuration.count() << "s"
+             << ", QPS=" << threadQps;
 }
 
 int main(int argc, char *argv[])
@@ -112,6 +124,10 @@ int main(int argc, char *argv[])
     std::cout << "Client starting stress test\n";
 
     // —— 2. 启动多个客户端线程做压力测试 ——
+
+    // 记录所有线程启动前的时间，用于全局 QPS 计算
+    auto globalStart = std::chrono::steady_clock::now();
+
     std::vector<std::unique_ptr<Thread>> threads;
     threads.reserve(kThreadCount);
 
@@ -129,7 +145,15 @@ int main(int argc, char *argv[])
         thr->join();
     }
 
+    // 所有线程结束，计算全局 QPS
+    auto globalEnd = std::chrono::steady_clock::now();
+    std::chrono::duration<double> totalDuration = globalEnd - globalStart;
+    long totalMessages = static_cast<long>(kThreadCount) * kMessagesPerThread;
+    double globalQps = totalMessages / totalDuration.count();
+
     std::cout << "All client threads finished\n";
+    std::cout << "Total time: " << totalDuration.count() << " seconds, "
+              << "Overall QPS: " << globalQps << "\n";
 
     // —— 3. 所有线程发送完成后，向服务器发送 "shutdown" ——
     {
